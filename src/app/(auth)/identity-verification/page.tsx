@@ -1,5 +1,11 @@
+import {
+  ArrowRight01Icon,
+  Clock01Icon,
+  LockKeyIcon,
+  Shield01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
-import { ArrowRight, Clock3, LockKeyhole, ShieldCheck } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { IdentityGuide } from "@/components/auth/IdentityGuide";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
@@ -9,25 +15,30 @@ import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Verify Your Identity | MUCYORA" },
+  title: {
+    absolute: "Verify Your Identity | MUCYORA",
+  },
   description:
     "Complete secure identity verification to activate trusted MUCYORA account features.",
-  robots: { index: false, follow: false },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 const processDetails = [
   {
-    icon: ShieldCheck,
+    icon: Shield01Icon,
     title: "Identity image",
     text: "Prepare a clear identity image for controlled private validation.",
   },
   {
-    icon: LockKeyhole,
+    icon: LockKeyIcon,
     title: "Guided live check",
     text: "Complete a short live-face step that will later use the protected biometric Engine.",
   },
   {
-    icon: Clock3,
+    icon: Clock01Icon,
     title: "Clear result",
     text: "Receive a safe status and the correct next action without exposing sensitive thresholds.",
   },
@@ -43,17 +54,24 @@ export default function IdentityVerificationPage() {
     >
       <div className={styles.content}>
         <VerificationStepper currentStep="introduction" />
+
         <MockModeNotice compact>
           This demonstration does not open a camera, upload an image, call NIDA,
           or send evidence to the MUCYORA Engine.
         </MockModeNotice>
 
         <div className={styles.process}>
-          {processDetails.map(({ icon: Icon, title, text }) => (
+          {processDetails.map(({ icon, title, text }) => (
             <article className={styles.processItem} key={title}>
               <span className={styles.processIcon} aria-hidden="true">
-                <Icon size={18} />
+                <HugeiconsIcon
+                  icon={icon}
+                  size={18}
+                  color="currentColor"
+                  strokeWidth={1.8}
+                />
               </span>
+
               <div>
                 <h2>{title}</h2>
                 <p>{text}</p>
@@ -72,7 +90,14 @@ export default function IdentityVerificationPage() {
 
         <LinkButton
           href="/identity-verification/document"
-          icon={<ArrowRight size={16} />}
+          icon={
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              size={16}
+              color="currentColor"
+              strokeWidth={1.8}
+            />
+          }
           iconPosition="right"
           fullWidth
         >
