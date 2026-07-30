@@ -1,0 +1,41 @@
+.icon {
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-lg);
+}
+.icon svg {
+  width: 52%;
+  height: 52%;
+}
+.sm {
+  width: 36px;
+  height: 36px;
+}
+.md {
+  width: 48px;
+  height: 48px;
+}
+.lg {
+  width: 64px;
+  height: 64px;
+}
+.success {
+  color: var(--color-success);
+  background: var(--color-success-soft);
+}
+.error {
+  color: var(--color-error);
+  background: var(--color-error-soft);
+}
+.warning {
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+}
+.info {
+  color: var(--color-info);
+  background: var(--color-info-soft);
+}
+.pending {
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
