@@ -1,0 +1,14 @@
+.experience {
+  display: grid;
+  gap: var(--space-6);
+}
+.previewControl {
+  padding: var(--space-4);
+  border: 1px dashed var(--color-primary-border);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+}
+.disabledLink {
+  pointer-events: none;
+  opacity: 0.52;
+}
