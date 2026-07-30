@@ -1,0 +1,8 @@
+.content {
+  display: grid;
+  gap: var(--space-5);
+}
+.footer {
+  display: flex;
+  justify-content: center;
+}
