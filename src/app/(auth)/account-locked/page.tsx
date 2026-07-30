@@ -1,15 +1,21 @@
+import { Key01Icon, Login01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
-import { KeyRound, LogIn } from "lucide-react";
 import { AccountStatusPanel } from "@/components/auth/AccountStatusPanel";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Account Access Temporarily Restricted | MUCYORA" },
+  title: {
+    absolute: "Account Access Temporarily Restricted | MUCYORA",
+  },
   description:
     "Review secure recovery options when access to a MUCYORA account is temporarily restricted.",
-  robots: { index: false, follow: false },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function Page() {
@@ -42,13 +48,31 @@ export default function Page() {
           ]}
           actions={
             <>
-              <LinkButton href="/forgot-password" icon={<KeyRound size={16} />}>
+              <LinkButton
+                href="/forgot-password"
+                icon={
+                  <HugeiconsIcon
+                    icon={Key01Icon}
+                    size={16}
+                    color="currentColor"
+                    strokeWidth={1.8}
+                  />
+                }
+              >
                 Recover account
               </LinkButton>
+
               <LinkButton
                 href="/login"
                 variant="secondary"
-                icon={<LogIn size={16} />}
+                icon={
+                  <HugeiconsIcon
+                    icon={Login01Icon}
+                    size={16}
+                    color="currentColor"
+                    strokeWidth={1.8}
+                  />
+                }
               >
                 Return to sign in
               </LinkButton>
