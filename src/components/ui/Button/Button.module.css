@@ -1,0 +1,93 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-control);
+  font-weight: 700;
+  line-height: 18px;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+.button:not(:disabled):active {
+  transform: translateY(1px);
+}
+.button:disabled {
+  opacity: 0.58;
+}
+.sm {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+}
+.md {
+  min-height: var(--control-height);
+  padding: 0 var(--space-4);
+}
+.lg {
+  min-height: var(--control-height-lg);
+  padding: 0 var(--space-5);
+}
+.primary {
+  color: #fff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.primary:not(:disabled):hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+.primary:not(:disabled):active {
+  background: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+}
+.secondary {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-color: var(--color-primary-border);
+}
+.secondary:not(:disabled):hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+}
+.tertiary {
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-color: transparent;
+}
+.tertiary:not(:disabled):hover {
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+.danger {
+  color: #fff;
+  background: var(--color-error);
+  border-color: var(--color-error);
+}
+.danger:not(:disabled):hover {
+  background: #912018;
+  border-color: #912018;
+}
+.fullWidth {
+  width: 100%;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  width: var(--control-icon-size);
+  height: var(--control-icon-size);
+  flex: 0 0 auto;
+}
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+.label {
+  min-width: 0;
+}
