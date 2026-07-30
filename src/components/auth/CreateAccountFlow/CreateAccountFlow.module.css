@@ -1,0 +1,63 @@
+.flow {
+  display: grid;
+  gap: var(--space-8);
+}
+.stage {
+  min-height: 360px;
+}
+.review {
+  display: grid;
+  gap: var(--space-5);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.complete {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+.complete > div {
+  display: grid;
+  gap: var(--space-2);
+}
+.kicker {
+  color: var(--color-success);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.complete h2 {
+  color: var(--color-text);
+  font-size: var(--font-size-title);
+  line-height: 1.2;
+}
+.complete p {
+  max-width: 560px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+}
+.completeActions {
+  width: min(100%, 480px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+@media (max-width: 620px) {
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .actions button {
+    width: 100%;
+  }
+  .completeActions {
+    grid-template-columns: 1fr;
+  }
+}
