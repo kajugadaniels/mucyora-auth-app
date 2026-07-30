@@ -1,0 +1,24 @@
+.form,
+.success {
+  display: grid;
+  gap: var(--space-5);
+}
+.resend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+.resend p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-small);
+}
+@media (max-width: 540px) {
+  .resend {
+    display: grid;
+  }
+  .resend button {
+    width: 100%;
+  }
+}
