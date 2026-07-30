@@ -1,0 +1,31 @@
+.panel {
+  display: flex;
+  min-height: 132px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
+}
+
+.panel strong {
+  color: var(--color-text);
+  font-size: var(--font-size-body);
+}
+
+.panel p {
+  max-width: 420px;
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-small);
+  line-height: 1.55;
+}
+
+@media (max-width: 420px) {
+  .panel {
+    align-items: flex-start;
+    padding: var(--space-4);
+  }
+}
