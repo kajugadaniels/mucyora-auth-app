@@ -12,7 +12,29 @@
 
 .footer p {
   color: var(--color-text-secondary);
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-label);
+}
+
+.createAccountLink {
+  display: inline;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.createAccountLink:hover {
+  color: var(--color-primary-hover);
+  border-bottom-color: currentColor;
+}
+
+.createAccountLink:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 @media (max-width: 480px) {

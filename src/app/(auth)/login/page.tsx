@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { LoginForm } from "@/components/forms/LoginForm";
-import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -22,14 +21,15 @@ export default function LoginPage() {
       description="Enter your account credentials. This phase uses a local mock gateway and does not create a real session."
       footer={
         <div className={styles.footer}>
-          <p>Need a MUCYORA account?</p>
-          <LinkButton
-            href="/"
-            variant="tertiary"
-            icon={<ArrowLeft size={16} />}
-          >
-            Return to account options
-          </LinkButton>
+          <p>
+            Need a MUCYORA account?{" "}
+            <Link
+              href="/create-account"
+              className={styles.createAccountLink}
+            >
+              Create an account
+            </Link>
+          </p>
         </div>
       }
     >
@@ -38,6 +38,7 @@ export default function LoginPage() {
           Use only the fake credentials displayed below. The form never contacts
           the backend.
         </MockModeNotice>
+
         <LoginForm />
       </div>
     </AuthCard>
