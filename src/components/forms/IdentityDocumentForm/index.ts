@@ -1,0 +1,1 @@
+export { IdentityDocumentForm } from "./IdentityDocumentForm";
