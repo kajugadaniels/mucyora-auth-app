@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" role="img" aria-labelledby="title desc">
+  <title id="title">Secure MUCYORA access</title><desc id="desc">Abstract secure account and device verification illustration.</desc>
+  <rect width="640" height="520" rx="32" fill="#1B4EF5"/>
+  <circle cx="500" cy="96" r="54" fill="#3E68F7"/>
+  <circle cx="96" cy="418" r="70" fill="#1542D8"/>
+  <rect x="110" y="82" width="420" height="356" rx="28" fill="#FFFFFF"/>
+  <rect x="150" y="126" width="214" height="18" rx="9" fill="#EDF2FF"/>
+  <rect x="150" y="166" width="340" height="58" rx="14" fill="#F8FAFC" stroke="#D0D5DD" stroke-width="2"/>
+  <rect x="150" y="244" width="340" height="58" rx="14" fill="#F8FAFC" stroke="#D0D5DD" stroke-width="2"/>
+  <rect x="150" y="326" width="160" height="52" rx="12" fill="#1B4EF5"/>
+  <path d="M417 321c37 0 67 30 67 67v23h-134v-23c0-37 30-67 67-67Z" fill="#EDF2FF"/>
+  <circle cx="417" cy="296" r="40" fill="#B9C9FF"/>
+  <path d="m397 387 14 14 29-29" fill="none" stroke="#1B4EF5" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
