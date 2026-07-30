@@ -1,6 +1,11 @@
 "use client";
 
-import { AlertTriangle, Home, RotateCcw } from "lucide-react";
+import {
+  Alert02Icon,
+  Home01Icon,
+  RefreshIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -23,15 +28,24 @@ export default function GlobalError({
     <main className={styles.page}>
       <section className={styles.card}>
         <span className={styles.icon} aria-hidden="true">
-          <AlertTriangle size={26} />
+          <HugeiconsIcon
+            icon={Alert02Icon}
+            size={26}
+            color="currentColor"
+            strokeWidth={1.8}
+          />
         </span>
+
         <span className={styles.eyebrow}>Interface recovery</span>
+
         <h1>Something did not load correctly</h1>
+
         <p>
           Try rendering the page again or return to the secure authentication
           entry. No authentication information was submitted by this static
           interface.
         </p>
+
         {error.digest && (
           <dl className={styles.reference}>
             <div>
@@ -40,11 +54,34 @@ export default function GlobalError({
             </div>
           </dl>
         )}
+
         <div className={styles.actions}>
-          <Button icon={<RotateCcw size={16} />} onClick={reset}>
+          <Button
+            icon={
+              <HugeiconsIcon
+                icon={RefreshIcon}
+                size={16}
+                color="currentColor"
+                strokeWidth={1.8}
+              />
+            }
+            onClick={reset}
+          >
             Try again
           </Button>
-          <LinkButton href="/" variant="secondary" icon={<Home size={16} />}>
+
+          <LinkButton
+            href="/"
+            variant="secondary"
+            icon={
+              <HugeiconsIcon
+                icon={Home01Icon}
+                size={16}
+                color="currentColor"
+                strokeWidth={1.8}
+              />
+            }
+          >
             Authentication home
           </LinkButton>
         </div>
