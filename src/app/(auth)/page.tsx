@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import {
-  BadgeCheck,
-  FileSignature,
-  SearchCheck,
-  ShieldCheck,
-} from "lucide-react";
+  Agreement01Icon,
+  Certificate01Icon,
+  DocumentValidationIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { LandingActions } from "@/components/auth/LandingActions";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
@@ -21,17 +21,17 @@ export const metadata: Metadata = {
 
 const capabilities = [
   {
-    icon: SearchCheck,
+    icon: DocumentValidationIcon,
     title: "Verified device records",
     description: "Connect devices to trusted ownership information.",
   },
   {
-    icon: BadgeCheck,
+    icon: Certificate01Icon,
     title: "Protected ownership",
     description: "Use verified identity for safer ownership changes.",
   },
   {
-    icon: FileSignature,
+    icon: Agreement01Icon,
     title: "Trusted agreements",
     description: "Prepare secure buyer and seller agreement workflows.",
   },
@@ -47,11 +47,18 @@ export default function AuthenticationHomePage() {
     >
       <div className={styles.content}>
         <div className={styles.capabilities}>
-          {capabilities.map(({ icon: Icon, title, description }) => (
+          {capabilities.map(({ icon, title, description }) => (
             <article className={styles.capability} key={title}>
               <span className={styles.capabilityIcon} aria-hidden="true">
-                <Icon size={18} />
+                <HugeiconsIcon
+                  icon={icon}
+                  size={18}
+                  color="currentColor"
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
               </span>
+
               <div>
                 <h2>{title}</h2>
                 <p>{description}</p>
