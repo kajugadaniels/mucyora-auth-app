@@ -1,0 +1,8 @@
+{
+  "largestJavaScriptChunkBytes": 230000,
+  "largestCssFileBytes": 90000,
+  "largestHtmlFileBytes": 140000,
+  "routeJavaScriptBytes": 420000,
+  "routeCssBytes": 120000,
+  "totalStaticAssetBytes": 2500000
+}
