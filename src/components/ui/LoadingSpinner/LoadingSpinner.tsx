@@ -18,6 +18,20 @@ export function LoadingSpinner({
       role="status"
       aria-label={label}
     >
+      <span className={styles.globe} aria-hidden="true">
+        <span className={styles.meridianWrap}>
+          <span className={styles.meridian} />
+        </span>
+        <span className={styles.meridianWrap}>
+          <span className={styles.meridian} />
+        </span>
+        <span className={styles.meridianWrap}>
+          <span className={styles.meridian} />
+        </span>
+      </span>
+      <span className={styles.orbit} aria-hidden="true">
+        <span className={styles.orbitDot} />
+      </span>
       <span className={styles.visuallyHidden}>{label}</span>
     </span>
   );

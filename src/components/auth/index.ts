@@ -1,5 +1,4 @@
 export { AccountStatusPanel } from "./AccountStatusPanel";
-export { AuthBrandPanel } from "./AuthBrandPanel";
 export { AuthCard } from "./AuthCard";
 export { AuthHeader } from "./AuthHeader";
 export { AuthShell } from "./AuthShell";
