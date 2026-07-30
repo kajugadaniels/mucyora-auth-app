@@ -1,0 +1,23 @@
+.field {
+  width: 100%;
+}
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+.label {
+  color: var(--color-text);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  line-height: 18px;
+}
+.required {
+  color: var(--color-error);
+}
+.optional {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+}
