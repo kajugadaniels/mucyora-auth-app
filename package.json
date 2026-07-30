@@ -1,24 +1,68 @@
 {
-  "name": "auth",
+  "name": "mucyora-auth-app",
   "version": "0.1.0",
   "private": true,
+  "description": "Static, accessible, and integration-ready authentication frontend for MUCYORA",
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check:structure": "node scripts/assert-project-boundary.mjs",
+    "check:no-gradients": "node scripts/assert-no-gradients.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check": "npm run check:structure && npm run check:no-gradients && npm run check:contrast && npm run lint && npm run typecheck && npm run test",
+    "clean": "node scripts/clean.mjs",
+    "test:unit": "vitest run",
+    "test:e2e": "npm run build && playwright test tests/e2e/accessibility.spec.ts tests/e2e/keyboard.spec.ts tests/e2e/responsive.spec.ts tests/e2e/auth-flows.spec.ts tests/e2e/no-network.spec.ts --project=chromium",
+    "test:e2e:all": "npm run build && playwright test tests/e2e/accessibility.spec.ts tests/e2e/keyboard.spec.ts tests/e2e/responsive.spec.ts tests/e2e/auth-flows.spec.ts tests/e2e/no-network.spec.ts",
+    "test:a11y": "npm run build && playwright test tests/e2e/accessibility.spec.ts --project=chromium",
+    "test:visual": "npm run build && playwright test tests/e2e/visual.spec.ts --project=chromium",
+    "test:visual:update": "npm run build && playwright test tests/e2e/visual.spec.ts --project=chromium --update-snapshots",
+    "test:no-network": "npm run build && playwright test tests/e2e/no-network.spec.ts --project=chromium",
+    "playwright:install": "playwright install --with-deps chromium",
+    "check:export": "node scripts/assert-static-export.mjs",
+    "analyze:export": "node scripts/analyze-static-export.mjs",
+    "check:performance": "node scripts/assert-performance-budget.mjs",
+    "lighthouse": "npm run build && lhci autorun --config=lighthouserc.json",
+    "release:check": "npm run check && npm run build && npm run check:export && npm run analyze:export && npm run check:performance && npm run test:e2e"
   },
   "dependencies": {
+    "lucide-react": "1.27.0",
     "next": "16.2.12",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "sonner": "2.0.7",
+    "@hookform/resolvers": "^5.2.1",
+    "react-hook-form": "^7.62.0",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/jest-dom": "7.0.0",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.4",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "10.7.0",
     "eslint-config-next": "16.2.12",
-    "typescript": "^5"
+    "jsdom": "29.1.1",
+    "typescript": "7.0.2",
+    "vite": "8.1.5",
+    "vitest": "4.1.10",
+    "@axe-core/playwright": "4.12.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "1.61.1"
   }
 }
