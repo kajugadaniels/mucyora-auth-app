@@ -1,0 +1,31 @@
+.toast {
+  font-family: var(--font-family) !important;
+}
+.title {
+  color: var(--color-text) !important;
+  font-size: var(--font-size-body-small) !important;
+  font-weight: 700 !important;
+}
+.description {
+  color: var(--color-text-secondary) !important;
+  font-size: var(--font-size-control) !important;
+}
+.actionButton {
+  min-height: 32px !important;
+  border-radius: var(--radius-sm) !important;
+  color: #fff !important;
+  background: var(--color-primary) !important;
+  font-size: var(--font-size-control) !important;
+}
+.cancelButton {
+  min-height: 32px !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--color-text-secondary) !important;
+  background: var(--color-surface-strong) !important;
+  font-size: var(--font-size-control) !important;
+}
+.closeButton {
+  border-color: var(--color-border) !important;
+  color: var(--color-text-secondary) !important;
+  background: var(--color-surface) !important;
+}
