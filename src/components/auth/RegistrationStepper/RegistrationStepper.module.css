@@ -1,0 +1,80 @@
+.stepper {
+  width: 100%;
+  overflow: hidden;
+}
+.stepper ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  text-align: center;
+}
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: calc(50% + 20px);
+  width: calc(100% - 40px);
+  height: 1px;
+  background: var(--color-border);
+}
+.marker {
+  position: relative;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+}
+.current {
+  color: var(--color-primary);
+}
+.current .marker {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-soft);
+}
+.complete {
+  color: var(--color-success);
+}
+.complete .marker {
+  border-color: var(--color-success);
+  color: #fff;
+  background: var(--color-success);
+}
+.complete:not(:last-child)::after {
+  background: var(--color-success);
+}
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .stepper ol {
+    gap: var(--space-1);
+  }
+  .label {
+    font-size: 10px;
+  }
+  .step:not(:last-child)::after {
+    left: calc(50% + 17px);
+    width: calc(100% - 34px);
+  }
+}
