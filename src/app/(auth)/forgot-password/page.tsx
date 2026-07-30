@@ -1,5 +1,6 @@
+import { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { ForgotPasswordForm } from "@/components/forms/ForgotPasswordForm";
@@ -7,10 +8,15 @@ import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Recover Your MUCYORA Account" },
+  title: {
+    absolute: "Recover Your MUCYORA Account",
+  },
   description:
     "Request secure password recovery instructions for your MUCYORA account.",
-  robots: { index: false, follow: false },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function ForgotPasswordPage() {
@@ -24,7 +30,15 @@ export default function ForgotPasswordPage() {
           <LinkButton
             href="/login"
             variant="tertiary"
-            icon={<ArrowLeft size={16} />}
+            icon={
+              <HugeiconsIcon
+                icon={ArrowLeft01Icon}
+                size={16}
+                color="currentColor"
+                strokeWidth={1.8}
+                aria-hidden="true"
+              />
+            }
           >
             Return to sign in
           </LinkButton>
@@ -36,6 +50,7 @@ export default function ForgotPasswordPage() {
           Use a fake email only. This form does not contact a mail provider or
           backend.
         </MockModeNotice>
+
         <ForgotPasswordForm />
       </div>
     </AuthCard>
