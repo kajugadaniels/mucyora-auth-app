@@ -1,0 +1,68 @@
+name: MUCYORA Auth UI quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run static quality checks
+        run: npm run check
+
+      - name: Build static export
+        run: npm run build
+
+      - name: Validate static export
+        run: npm run check:export
+
+      - name: Analyze static export
+        run: npm run analyze:export
+
+      - name: Enforce performance budgets
+        run: npm run check:performance
+
+      - name: Run browser tests
+        run: npm run test:e2e
+
+      - name: Run Lighthouse CI
+        run: npm run lighthouse
+
+      - name: Run visual regression when baselines exist
+        if: ${{ hashFiles('tests/e2e/visual.spec.ts-snapshots/**') != '' }}
+        run: npm run test:visual
+
+      - name: Upload browser reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-ui-browser-reports
+          path: |
+            reports/playwright
+            reports/playwright-artifacts
+            reports/lighthouse
+            reports/static-export-analysis.json
+          if-no-files-found: ignore
+          retention-days: 14
