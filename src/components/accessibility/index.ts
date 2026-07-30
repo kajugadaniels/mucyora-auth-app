@@ -1,1 +1,1 @@
-export { RouteAccessibilityManager } from "./RouteAccessibilityManager";
+export { RouteAccessibilityManager } from "./RouteAccessibilityManager/RouteAccessibilityManager";

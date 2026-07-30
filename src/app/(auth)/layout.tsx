@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { RouteAccessibilityManager } from "@/components/accessibility/RouteAccessibilityManager";
+import { RouteAccessibilityManager } from "@/components/accessibility/RouteAccessibilityManager/RouteAccessibilityManager";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { SonnerProvider } from "@/components/ui/SonnerProvider";
 import styles from "./layout.module.css";
