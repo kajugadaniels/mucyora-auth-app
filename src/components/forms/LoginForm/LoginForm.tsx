@@ -1,7 +1,14 @@
 "use client";
 
+import {
+  Alert02Icon,
+  CheckmarkCircle01Icon,
+  Key01Icon,
+  Login01Icon,
+  Mail01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyRound, LogIn, Mail, ShieldAlert, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,6 +54,7 @@ function resultToNotice(result: LoginResult): LoginNotice {
 
 export function LoginForm() {
   const [notice, setNotice] = useState<LoginNotice | null>(null);
+
   const { isSubmitting, run } = useMockSubmission();
 
   const {
@@ -76,6 +84,7 @@ export function LoginForm() {
       }
 
       const nextNotice = resultToNotice(result);
+
       setNotice(nextNotice);
       resetField("password");
 
@@ -83,6 +92,7 @@ export function LoginForm() {
         toast.success("Sign-in demonstration completed", {
           description: "No real session or token was created.",
         });
+
         return;
       }
 
@@ -92,6 +102,7 @@ export function LoginForm() {
     } catch (error) {
       if (!isAuthGatewayError(error)) {
         toast.error("The static sign-in could not be completed.");
+
         return;
       }
 
@@ -105,6 +116,7 @@ export function LoginForm() {
 
         setNotice(accountLockedNotice);
         toast.error(accountLockedNotice.title);
+
         return;
       }
 
@@ -118,6 +130,7 @@ export function LoginForm() {
 
         setNotice(verificationNotice);
         toast.warning(verificationNotice.title);
+
         return;
       }
 
@@ -148,7 +161,14 @@ export function LoginForm() {
       <div className={styles.fields}>
         <Input
           label="Email address"
-          icon={<Mail size={16} />}
+          icon={
+            <HugeiconsIcon
+              icon={Mail01Icon}
+              size={16}
+              color="currentColor"
+              strokeWidth={1.8}
+            />
+          }
           type="email"
           inputMode="email"
           autoComplete="email"
@@ -179,14 +199,27 @@ export function LoginForm() {
         />
 
         <Link className={styles.recoveryButton} href="/forgot-password">
-          <KeyRound size={15} aria-hidden="true" />
+          <HugeiconsIcon
+            icon={Key01Icon}
+            size={15}
+            color="currentColor"
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
           Forgot password?
         </Link>
       </div>
 
       <Button
         type="submit"
-        icon={<LogIn size={16} />}
+        icon={
+          <HugeiconsIcon
+            icon={Login01Icon}
+            size={16}
+            color="currentColor"
+            strokeWidth={1.8}
+          />
+        }
         isLoading={isSubmitting}
         loadingText="Signing in"
         fullWidth
@@ -196,17 +229,25 @@ export function LoginForm() {
 
       <div className={styles.demo} role="note">
         <span className={styles.demoIcon} aria-hidden="true">
-          <ShieldCheck size={16} />
+          <HugeiconsIcon
+            icon={CheckmarkCircle01Icon}
+            size={16}
+            color="currentColor"
+            strokeWidth={1.8}
+          />
         </span>
 
         <div>
           <strong>Demonstration credentials</strong>
+
           <p>
             Email: <code>{authMockScenarios.demoCredentials.email}</code>
           </p>
+
           <p>
             Password: <code>{authMockScenarios.demoCredentials.password}</code>
           </p>
+
           <p className={styles.alternate}>
             Try <code>{authMockScenarios.emailNotVerified}</code> or{" "}
             <code>{authMockScenarios.accountLocked}</code> to preview other
@@ -216,7 +257,13 @@ export function LoginForm() {
       </div>
 
       <p className={styles.securityLine}>
-        <ShieldAlert size={15} aria-hidden="true" />
+        <HugeiconsIcon
+          icon={Alert02Icon}
+          size={15}
+          color="currentColor"
+          strokeWidth={1.8}
+          aria-hidden="true"
+        />
         Never use real credentials in this static demonstration.
       </p>
     </form>
