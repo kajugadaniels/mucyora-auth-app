@@ -30,8 +30,8 @@
   --color-focus-ring: rgba(27, 78, 245, 0.24);
   --color-overlay: rgba(16, 24, 40, 0.48);
   --font-family:
-    var(--font-outfit), system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+      var(--font-outfit), system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Arial, sans-serif;
   --font-size-control: 12px;
   --font-size-caption: 11px;
   --font-size-label: 12px;

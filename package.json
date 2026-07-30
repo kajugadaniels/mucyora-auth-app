@@ -4,8 +4,8 @@
   "private": true,
   "description": "Static, accessible, and integration-ready authentication frontend for MUCYORA",
   "engines": {
-    "node": ">=22.0.0",
-    "npm": ">=10.0.0"
+    "node": ">=24.0.0 <25",
+    "npm": ">=11.0.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -36,21 +36,24 @@
     "release:check": "npm run check && npm run build && npm run check:export && npm run analyze:export && npm run check:performance && npm run test:e2e"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "lucide-react": "1.27.0",
     "next": "16.2.12",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "sonner": "2.0.7",
-    "@hookform/resolvers": "^5.2.1",
     "react-hook-form": "^7.62.0",
+    "sonner": "2.0.7",
     "zod": "^4.1.5"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "1.61.1",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "7.0.0",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
-    "@types/node": "26.1.1",
+    "@types/node": "^24.0.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.4",
@@ -58,11 +61,8 @@
     "eslint": "10.7.0",
     "eslint-config-next": "16.2.12",
     "jsdom": "29.1.1",
-    "typescript": "7.0.2",
+    "typescript": "^6.0.3",
     "vite": "8.1.5",
-    "vitest": "4.1.10",
-    "@axe-core/playwright": "4.12.1",
-    "@lhci/cli": "^0.15.1",
-    "@playwright/test": "1.61.1"
+    "vitest": "4.1.10"
   }
 }

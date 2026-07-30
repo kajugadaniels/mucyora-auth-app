@@ -6,8 +6,10 @@ import "./globals.css";
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["normal"],
   display: "swap",
   variable: "--font-outfit",
+  fallback: ["system-ui", "Arial", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +34,7 @@ export default function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={outfit.variable}>
-      <body>{children}</body>
+      <body className={outfit.className}>{children}</body>
     </html>
   );
 }
