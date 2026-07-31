@@ -5,6 +5,7 @@ import { EmailVerificationForm } from "@/components/forms/EmailVerificationForm"
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: { absolute: "Verify Your Email | MUCYORA" },
@@ -21,13 +22,12 @@ export default function VerifyEmailPage() {
       description="Enter the static six-digit code and preview resend, invalid-code, expired-code, and success states."
       footer={
         <div className={styles.footer}>
-          <LinkButton
-            href="/create-account"
-            variant="tertiary"
-            icon={<ArrowLeft size={16} />}
-          >
-            Return to account creation
-          </LinkButton>
+          <Link
+              href="/create-account"
+              className={styles.createAccountLink}
+            >
+              Return to account creation
+            </Link>
         </div>
       }
     >

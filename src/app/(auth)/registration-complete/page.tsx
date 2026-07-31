@@ -16,7 +16,10 @@ export const metadata: Metadata = {
 
 export default function RegistrationCompletePage() {
   return (
-    <AuthCard size="wide" title="Your static registration flow is complete">
+    <AuthCard
+      // size="wide"
+      title="Your registration is complete"
+    >
       <section className={styles.complete}>
         <StatusIcon
           variant="success"

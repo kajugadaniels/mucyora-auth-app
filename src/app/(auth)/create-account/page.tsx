@@ -6,6 +6,7 @@ import { CreateAccountFlow } from "@/components/auth/CreateAccountFlow";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
@@ -18,37 +19,25 @@ export const metadata: Metadata = {
 export default function CreateAccountPage() {
   return (
     <AuthCard
-      size="wide"
+      // size="wide"
       eyebrow="Create your account"
       title="Start with your verified identity"
       description="Follow the static NID registration flow, review the fake citizen match, create credentials, and acknowledge the required policies."
       footer={
         <div className={styles.footer}>
-          <p>Already have a MUCYORA account?</p>
-
-          <LinkButton
-            href="/login"
-            variant="tertiary"
-            icon={
-              <HugeiconsIcon
-                icon={Login01Icon}
-                size={16}
-                color="currentColor"
-                strokeWidth={1.8}
-              />
-            }
-          >
-            Sign in instead
-          </LinkButton>
+          <p>
+            Already have a MUCYORA account?{" "}
+            <Link
+              href="/login"
+              className={styles.createAccountLink}
+            >
+              Sign in instead
+            </Link>
+          </p>
         </div>
       }
     >
       <div className={styles.content}>
-        <MockModeNotice compact>
-          Use only the supplied fake National IDs and account details. No NIDA
-          or backend request is made.
-        </MockModeNotice>
-
         <CreateAccountFlow />
       </div>
     </AuthCard>

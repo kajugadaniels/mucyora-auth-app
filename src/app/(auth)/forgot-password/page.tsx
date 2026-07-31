@@ -1,11 +1,10 @@
-import { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { ForgotPasswordForm } from "@/components/forms/ForgotPasswordForm";
 import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: {
@@ -27,21 +26,12 @@ export default function ForgotPasswordPage() {
       description="Enter an email address to preview a privacy-preserving recovery response. The same confirmation appears whether or not an account exists."
       footer={
         <div className={styles.footer}>
-          <LinkButton
-            href="/login"
-            variant="tertiary"
-            icon={
-              <HugeiconsIcon
-                icon={ArrowLeft01Icon}
-                size={16}
-                color="currentColor"
-                strokeWidth={1.8}
-                aria-hidden="true"
-              />
-            }
-          >
-            Return to sign in
-          </LinkButton>
+          <Link
+              href="/login"
+              className={styles.createAccountLink}
+            >
+              Return to sign in
+            </Link>
         </div>
       }
     >

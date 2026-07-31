@@ -34,11 +34,6 @@ export default function LoginPage() {
       }
     >
       <div className={styles.content}>
-        <MockModeNotice compact>
-          Use only the fake credentials displayed below. The form never contacts
-          the backend.
-        </MockModeNotice>
-
         <LoginForm />
       </div>
     </AuthCard>
