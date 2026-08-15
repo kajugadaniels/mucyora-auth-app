@@ -1,65 +1,61 @@
 # MUCYORA Auth Frontend
 
-Production-oriented Next.js authentication frontend for MUCYORA. It runs on
-port `4000` and exposes a server-side, same-origin gateway for the public
-`api/auth` contract. Browser code calls paths such as `/auth/login`; the private
-Auth service origin and port are never bundled into the browser.
+Production Next.js authentication frontend and same-origin gateway for
+`api/auth`. It runs on port `4000`; browser requests use paths such as
+`/auth/login`, while the private backend origin and port remain server-only.
 
-## Current status
+## Integrated flows
 
-- 35 public Auth endpoints are registered as individual route files.
-- Internal operations, NIDA credentials, AWS credentials, Engine keys, and
-  service-to-service keys are not exposed.
-- Upstream status codes, JSON bodies, backend validation messages, correlation
-  IDs, retry metadata, and authentication cookies are preserved.
-- Business validation remains owned by `api/auth`; the proxy only enforces
-  transport boundaries such as same-origin access, body limits, safe URLs, and
-  timeouts.
-- UI forms still use the mock gateway. Connecting those forms is the next,
-  explicitly separate integration phase.
+- credential login with full/limited session routing;
+- NID-first registration with phone, password, and four versioned consents;
+- email-link verification and limited identity-enrolment session exchange;
+- enumeration-safe password recovery and single-use reset links;
+- live National ID and liveness provider handoffs with no file upload;
+- identity attempts, completion, manual accessibility review, and fresh login;
+- session, passkey, recovery-code, and step-up methods in `HttpAuthGateway`;
+- 35 explicit route handlers with no caller-controlled catch-all proxy.
 
-## Local configuration
+Access tokens exist only in JavaScript memory. Refresh credentials remain in
+HttpOnly cookies, and the readable CSRF cookie is copied to the backend header.
+Backend validation and business error messages are rendered without frontend
+replacement.
 
-Create `.env.local` from `.env.example`:
+## Configuration
+
+Create `.env.local` from `.env.example`. The essential local values are:
 
 ```env
 NEXT_PUBLIC_SITE_URL=http://localhost:4000
+NEXT_PUBLIC_MUCYORA_APP_ORIGIN=http://localhost:4001
+NEXT_PUBLIC_MUCYORA_CSRF_COOKIE_NAME=mucyora_csrf
+NEXT_PUBLIC_MUCYORA_IDENTITY_POLICY_VERSION=2026-07-01
+NEXT_PUBLIC_MUCYORA_DOCUMENT_CAPTURE_ORIGIN=https://capture.example.rw
+NEXT_PUBLIC_MUCYORA_LIVENESS_ORIGIN=https://liveness.example.rw
 MUCYORA_AUTH_API_ORIGIN=http://127.0.0.1:3000
 MUCYORA_AUTH_PROXY_TIMEOUT_MS=30000
 ```
 
-`MUCYORA_AUTH_API_ORIGIN` is server-only. Never rename it with a
-`NEXT_PUBLIC_` prefix.
+The two provider origins must be the exact approved browser clients for the
+document-capture and liveness services. Do not use wildcard or untrusted
+origins. `MUCYORA_AUTH_API_ORIGIN` must never be prefixed with `NEXT_PUBLIC_`.
 
-## Run locally
+## Run and validate
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:4000`. The backend must be running separately on its
-configured private origin.
-
-## Quality gates
-
 ```bash
-npm run check:structure
-npm run typecheck
-npm test
+npm run check
 npm run build
-```
-
-Endpoint-specific tests:
-
-```bash
-npm test -- --run src/server/auth-proxy.test.ts tests/auth-proxy-routes.test.ts
+npm audit --omit=dev --audit-level=high
 ```
 
 ## Documentation
 
-- [Registered Auth endpoints](docs/auth-endpoint-proxy.md)
-- [Backend integration plan](docs/backend-integration-plan.md)
+- [Registered endpoint mappings](docs/auth-endpoint-proxy.md)
+- [Backend integration](docs/backend-integration-plan.md)
 - [Browser session model](docs/auth-session-browser-model.md)
 - [Security policy](SECURITY.md)
-- [Testing and release](docs/testing-and-release.md)
+- [Git rules](docs/git.md)
