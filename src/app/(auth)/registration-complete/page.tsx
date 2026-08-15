@@ -27,21 +27,20 @@ export default function RegistrationCompletePage() {
           label="Registration completed"
         />
         <div className={styles.heading}>
-          <span>Account activation demonstration</span>
-          <h2>Continue securely when backend integration is enabled</h2>
+          <span>Account activation</span>
+          <h2>Sign in with your verified account</h2>
           <p>
-            In the real platform, a verified email unlocks the next onboarding
-            step: protected identity verification. This static build did not
-            create an account or session.
+            Your email and identity verification steps are complete. MUCYORA
+            requires a fresh login before creating a full session.
           </p>
         </div>
 
         <Alert
           variant="info"
-          title="Identity verification is intentionally deferred"
+          title="Fresh login required"
         >
-          The document and live-check interface will be implemented in the next
-          authorized phase. This page does not link to an unfinished route.
+          The limited enrolment session was revoked when verification passed.
+          Enter your credentials again to continue.
         </Alert>
 
         <SecurityNotice>
@@ -59,14 +58,14 @@ export default function RegistrationCompletePage() {
             icon={<UserPlus size={16} />}
             fullWidth
           >
-            Restart registration demo
+            Create another account
           </LinkButton>
         </div>
 
         <p className={styles.next}>
           <ShieldCheck size={15} aria-hidden="true" />
-          No password, token, NID, consent record, or verification media was
-          retained.
+          This frontend does not persist passwords, National IDs, or provider
+          credentials.
         </p>
       </section>
     </AuthCard>
