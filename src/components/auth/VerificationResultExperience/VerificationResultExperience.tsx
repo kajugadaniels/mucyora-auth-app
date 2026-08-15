@@ -42,7 +42,14 @@ export function VerificationResultExperience() {
   useEffect(() => {
     const search = new URLSearchParams(globalThis.location?.search ?? "");
     const requested = search.get("state");
-    if (requested && isScenario(requested)) setScenario(requested);
+    if (!requested || !isScenario(requested)) {
+      return;
+    }
+
+    const frame = globalThis.requestAnimationFrame(() => {
+      setScenario(requested);
+    });
+    return () => globalThis.cancelAnimationFrame(frame);
   }, []);
 
   const result: VerificationResultContent = getMockVerificationResult(scenario);
