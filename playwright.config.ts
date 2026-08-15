@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = "http://127.0.0.1:4173";
+const baseURL = "http://127.0.0.1:4000";
 
 export default defineConfig({
     testDir: "./tests/e2e",
@@ -28,10 +28,9 @@ export default defineConfig({
         video: "retain-on-failure",
         actionTimeout: 8_000,
         navigationTimeout: 15_000,
-        reducedMotion: "reduce",
     },
     webServer: {
-        command: "node scripts/serve-static.mjs out 4173",
+        command: "npm run start",
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 30_000,
