@@ -1,9 +1,7 @@
 export { AccountStatusPanel } from "./AccountStatusPanel";
 export { AuthCard } from "./AuthCard";
-export { AuthHeader } from "./AuthHeader";
 export { AuthShell } from "./AuthShell";
 export { CreateAccountFlow } from "./CreateAccountFlow";
-export { FormFooter } from "./FormFooter";
 export { IdentityGuide } from "./IdentityGuide";
 export { LandingActions } from "./LandingActions";
 export { PasswordRequirements } from "./PasswordRequirements";
