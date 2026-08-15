@@ -1,76 +1,16 @@
 import type { ReactNode } from "react";
 import { Alert } from "@/components/ui/Alert";
 import { StatusIcon } from "@/components/ui/StatusIcon";
-import type { VerificationResultContent } from "@/mocks/data/verification-results";
+import type { VerificationSubmission } from "@/services/auth";
 import styles from "./VerificationResult.module.css";
-
-export interface VerificationResultProps {
-  result: VerificationResultContent;
-  retryLabel?: string;
-  actions: ReactNode;
-}
-
-const statusVariant = {
-  PASS: "success",
-  RETRY: "warning",
-  PENDING: "pending",
-  FAIL: "error",
-  UNAVAILABLE: "warning",
-} as const;
-
-const alertVariant = {
-  PASS: "success",
-  RETRY: "warning",
-  PENDING: "info",
-  FAIL: "error",
-  UNAVAILABLE: "warning",
-} as const;
-
-export function VerificationResult({
-  result,
-  retryLabel,
-  actions,
-}: VerificationResultProps) {
-  return (
-    <div className={styles.result}>
-      <StatusIcon
-        variant={statusVariant[result.status]}
-        size="lg"
-        label={result.title}
-      />
-
-      <div className={styles.heading}>
-        <span>{result.eyebrow}</span>
-        <h2>{result.title}</h2>
-        <p>{result.description}</p>
-      </div>
-
-      <Alert variant={alertVariant[result.status]} title={result.detailTitle}>
-        {result.detail}
-      </Alert>
-
-      {retryLabel && (
-        <p className={styles.retry} role="status" aria-live="polite">
-          {retryLabel}
-        </p>
-      )}
-
-      <dl className={styles.metadata}>
-        <div>
-          <dt>Demonstration status</dt>
-          <dd>{result.status}</dd>
-        </div>
-        <div>
-          <dt>Safe reason code</dt>
-          <dd>{result.reasonCode}</dd>
-        </div>
-        <div>
-          <dt>Result reference</dt>
-          <dd>{result.resultReference}</dd>
-        </div>
-      </dl>
-
-      <div className={styles.actions}>{actions}</div>
-    </div>
-  );
+export function VerificationResult({ result, actions }: { result: VerificationSubmission; actions: ReactNode }) {
+  const passed = result.nextAction === "LOGIN" || result.nextAction === "STEP_UP_COMPLETED";
+  const pending = result.nextAction === "WAIT_FOR_REVIEW" || result.nextAction === "WAIT_FOR_PROVIDER";
+  return <div className={styles.result}>
+    <StatusIcon variant={passed ? "success" : pending ? "pending" : "warning"} size="lg" label={result.status} />
+    <div className={styles.heading}><span>Identity verification</span><h2>{result.status}</h2><p>Your verification request was processed under policy {result.policyVersion}.</p></div>
+    <Alert variant={passed ? "success" : pending ? "info" : "warning"} title={result.nextAction.replaceAll("_", " ")}>{result.reasonCode || "Follow the next action shown below."}</Alert>
+    <dl className={styles.metadata}><div><dt>Status</dt><dd>{result.status}</dd></div><div><dt>Reason code</dt><dd>{result.reasonCode || "NOT_PROVIDED"}</dd></div><div><dt>Attempt</dt><dd>{result.attemptNumber}</dd></div></dl>
+    <div className={styles.actions}>{actions}</div>
+  </div>;
 }
