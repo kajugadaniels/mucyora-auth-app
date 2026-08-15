@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { VerificationStepper } from "@/components/auth/VerificationStepper";
 import { RouteLoadingPanel } from "@/components/ui/RouteLoadingPanel";
 import styles from "./page.module.css";
@@ -39,15 +38,10 @@ export default function VerificationResultPage() {
       size="wide"
       eyebrow="Verification result"
       title="Review the current verification state"
-      description="Preview safe result messaging and the correct next action for successful, retry, pending, failed, and unavailable states."
+      description="Review the backend decision and the permitted next action."
     >
       <div className={styles.content}>
         <VerificationStepper currentStep="result" />
-
-        <MockModeNotice compact>
-          The selected state is local demonstration content. No biometric
-          evaluation occurred.
-        </MockModeNotice>
 
         <VerificationResultExperience />
       </div>
