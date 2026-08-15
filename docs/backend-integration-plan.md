@@ -1,77 +1,47 @@
-# Backend Integration Plan
+# Backend Integration
 
-## Current status
+## Status
 
-The same-origin HTTP boundary is implemented and tested. All approved public
-Auth operations are available through individual Next.js route handlers. The
-browser-visible paths and backend mappings are recorded in
-[Auth endpoint proxy](auth-endpoint-proxy.md).
+The browser UI is connected to `api/auth` through `HttpAuthGateway`. The
+gateway calls only same-origin route handlers and never constructs or reads the
+private backend origin.
 
-## Target adapter
+## Registration and enrolment
 
-```text
-AuthGateway
-├── MockAuthGateway          current
-└── HttpAuthGateway          next integration phase
-```
+1. Submit the Rwanda NID to `/registration/citizen/lookup`.
+2. Keep the returned challenge token in memory.
+3. Register email, Rwandan phone, password, and the four required consents.
+4. Open the single-use email verification link.
+5. Exchange its enrolment token for a limited cookie-backed session.
+6. Create an identity attempt and provider-bound document capture session.
+7. Complete live document and liveness provider SDK flows.
+8. Submit the attempt and follow the backend `nextAction`.
+9. Consume the completion reference once and require a fresh login.
 
-`HttpAuthGateway` must call only the registered same-origin paths. It must never
-receive or construct the private Auth service origin.
+## Browser security model
 
-## Gateway mapping
+- access tokens are memory-only;
+- refresh tokens are HttpOnly cookies;
+- CSRF values come from the readable cookie and are sent as a header;
+- password, NID, provider token, and biometric evidence are never persisted;
+- provider windows use exact origins, URL fragments, and session-bound
+  `postMessage` validation;
+- backend response messages and correlation references are preserved;
+- 401 responses clear in-memory access state;
+- no automatic retry occurs for login, registration, password reset, or final
+  identity submission.
 
-| Gateway method | Intended operation |
-|---|---|
-| `login` | `POST /auth/login` |
-| `lookupCitizen` | `POST /registration/citizen/lookup` |
-| `register` | `POST /registration` |
-| `verifyEmail` | `POST /registration/email/verify` |
-| `resendVerification` | `POST /registration/email/resend` |
-| `forgotPassword` | `POST /auth/password/forgot` |
-| `resetPassword` | `POST /auth/password/reset` |
-| identity attempt | `POST /identity-verification/attempts` |
-| live document session | `POST /identity-verification/attempts/:id/document-capture-session` |
-| live-check session | `POST /identity-verification/attempts/:id/liveness-session` |
-| submit attempt | `POST /identity-verification/attempts/:id/submit` |
-| result/status | `GET /identity-verification/attempts/:id` |
+## Provider contract
 
-## Integration sequence
+The approved document and liveness browser clients must:
 
-1. Export the backend OpenAPI document and generate/reconcile frontend DTOs.
-2. Extend `AuthGateway` for the complete NID-first and live-capture state model.
-3. Implement `HttpAuthGateway` against same-origin paths only.
-4. Keep access tokens in memory and use the approved cookie/CSRF refresh model.
-5. Integrate login and password recovery.
-6. Integrate NID lookup, registration, and email verification.
-7. Integrate limited identity-enrolment sessions.
-8. Integrate provider-backed live document and liveness sessions.
-9. Integrate verification completion and the required fresh-login redirect.
-10. Remove production mock controls and complete contract, accessibility,
-    security, concurrency, and failure-mode testing.
+- be hosted at the exact configured HTTPS origins;
+- consume credentials only from the URL fragment;
+- disallow existing-file and gallery uploads;
+- bind capture to the supplied session ID;
+- notify the opener only after provider completion using
+  `MUCYORA_DOCUMENT_CAPTURE_COMPLETED` or `MUCYORA_LIVENESS_COMPLETED`;
+- return the exact `sessionId` in the message;
+- never send media or provider payloads through the Auth frontend.
 
-## Environment boundary
-
-```text
-NEXT_PUBLIC_MUCYORA_AUTH_MODE
-NEXT_PUBLIC_MUCYORA_USER_APP_ORIGIN
-NEXT_PUBLIC_MUCYORA_SUPPORT_URL
-MUCYORA_AUTH_API_ORIGIN
-MUCYORA_AUTH_PROXY_TIMEOUT_MS
-```
-
-`MUCYORA_AUTH_API_ORIGIN` is server-only. It must never be exposed as
-`NEXT_PUBLIC_*`. Secrets, service credentials, signing keys, NIDA credentials,
-AWS credentials, and Engine credentials never belong in browser code.
-
-## HTTP transport requirements
-
-- HTTPS;
-- same-origin browser paths only;
-- `credentials: include` only under the approved cookie model;
-- CSRF header support;
-- request timeout and abort signal;
-- idempotency key support;
-- response content-type validation;
-- exact backend business messages and constrained empty proxy failures;
-- no token logging;
-- no retry of login, registration, password reset, or biometric submission without an idempotency design.
+Auth verifies provider results server-to-server before allowing the next state.
