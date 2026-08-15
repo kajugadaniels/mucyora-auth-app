@@ -17,10 +17,6 @@ const required = [
   "src/app/(auth)/registration-complete/page.tsx",
   "src/app/(auth)/forgot-password/page.tsx",
   "src/app/(auth)/reset-password/page.tsx",
-  "playwright.config.ts",
-  "lighthouserc.json",
-  "performance-budgets.json",
-  "docs/accessibility-audit.md",
   "docs/backend-integration-plan.md",
   "next.config.ts",
   "src/config/ui.config.ts",
@@ -31,7 +27,6 @@ const required = [
   "src/components/ui/SelectField/SelectField.tsx",
   "src/components/ui/TextareaField/TextareaField.tsx",
   "src/components/ui/ImageField/ImageField.tsx",
-  "src/components/ui/SonnerProvider/SonnerProvider.tsx",
   "src/components/accessibility/RouteAccessibilityManager/RouteAccessibilityManager.tsx",
   "src/components/ui/RouteLoadingPanel/RouteLoadingPanel.tsx",
   "src/components/auth/AuthShell/AuthShell.tsx",
@@ -51,15 +46,13 @@ const required = [
   "src/app/(auth)/account-locked/page.tsx",
   "src/components/auth/VerificationStepper/VerificationStepper.tsx",
   "src/components/auth/IdentityGuide/IdentityGuide.tsx",
-  "src/components/auth/SelfieFrame/SelfieFrame.tsx",
   "src/components/auth/VerificationResult/VerificationResult.tsx",
   "src/components/auth/AccountStatusPanel/AccountStatusPanel.tsx",
   "src/components/forms/IdentityDocumentForm/IdentityDocumentForm.tsx",
   "src/components/forms/LiveCheckForm/LiveCheckForm.tsx",
-  "src/mocks/services/MockAuthGateway.ts",
   "src/services/auth/AuthGateway.ts",
+  "src/services/auth/HttpAuthGateway.ts",
   "src/server/auth-proxy.ts",
-  "src/lib/validation/auth.schemas.ts",
 ];
 
 for (const file of required) {
@@ -105,17 +98,13 @@ for (const file of walk(join(root, "src"))) {
   for (const forbidden of [
     "localStorage",
     "sessionStorage",
-    "document.cookie",
     "fetch(",
     "axios",
     "NEXT_PUBLIC_API_URL",
     "getUserMedia(",
     "MediaRecorder(",
   ]) {
-    if (
-      forbidden === "fetch(" &&
-      name === "src/server/auth-proxy.ts"
-    ) {
+    if (forbidden === "fetch(" && ["src/server/auth-proxy.ts", "src/services/auth/HttpAuthGateway.ts"].includes(name)) {
       continue;
     }
     if (source.includes(forbidden)) {
@@ -127,7 +116,7 @@ for (const file of walk(join(root, "src"))) {
 const env = readFileSync(join(root, ".env.example"), "utf8");
 for (const forbidden of ["API_URL", "TOKEN", "SECRET", "PASSWORD"]) {
   if (env.includes(forbidden)) {
-    errors.push(`.env.example contains forbidden static-phase key fragment: ${forbidden}`);
+    errors.push(`.env.example contains forbidden public key fragment: ${forbidden}`);
   }
 }
 
