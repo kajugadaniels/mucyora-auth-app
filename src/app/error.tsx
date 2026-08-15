@@ -42,8 +42,8 @@ export default function GlobalError({
 
         <p>
           Try rendering the page again or return to the secure authentication
-          entry. No authentication information was submitted by this static
-          interface.
+          entry. Sensitive authentication values are not retained on this
+          error page.
         </p>
 
         {error.digest && (
