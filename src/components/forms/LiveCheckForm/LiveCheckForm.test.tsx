@@ -1,5 +1,9 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { LiveCheckForm } from "./LiveCheckForm";
+
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
+
 describe("LiveCheckForm", () => {
   it("states that the camera is not opened", () => {
     render(<LiveCheckForm />);
