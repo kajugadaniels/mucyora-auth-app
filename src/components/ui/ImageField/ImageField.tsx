@@ -5,6 +5,7 @@ import { ImagePlus, RefreshCw, Trash2, UploadCloud } from "lucide-react";
 import {
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
   type DragEvent,
@@ -50,22 +51,21 @@ export function ImageField({
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const [localError, setLocalError] = useState<string>();
-  const [objectUrl, setObjectUrl] = useState<string>();
+  const objectUrl = useMemo(
+    () => (value && !previewUrl ? URL.createObjectURL(value) : undefined),
+    [previewUrl, value],
+  );
 
   const activeError = error ?? localError;
   const isInteractive = !disabled && !isUploading;
 
   useEffect(() => {
-    if (!value || previewUrl) {
-      setObjectUrl(undefined);
-      return;
-    }
-
-    const url = URL.createObjectURL(value);
-    setObjectUrl(url);
-
-    return () => URL.revokeObjectURL(url);
-  }, [value, previewUrl]);
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [objectUrl]);
 
   function validate(file: File): string | undefined {
     if (!accept.includes(file.type)) {
