@@ -23,18 +23,12 @@
   --dot-size: 3px;
 }
 
-/* The sphere itself: soft shaded fill + rim light */
+/* The sphere itself: restrained fill and rim light without gradients. */
 .globe {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background:
-    radial-gradient(
-      circle at 32% 28%,
-      color-mix(in srgb, currentColor 60%, transparent),
-      transparent 65%
-    ),
-    color-mix(in srgb, currentColor 12%, transparent);
+  background: color-mix(in srgb, currentColor 12%, transparent);
   box-shadow:
     0 0 0 1px color-mix(in srgb, currentColor 40%, transparent),
     inset 0 0 4px color-mix(in srgb, currentColor 25%, transparent);
