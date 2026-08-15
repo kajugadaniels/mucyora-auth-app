@@ -29,8 +29,23 @@ Engine, or internal Auth endpoints directly.
 
 ## Prohibited data handling
 
-Do not add code that stores passwords, National IDs, OTPs, identity images, access tokens, or
-refresh tokens in localStorage, sessionStorage, URLs, analytics, logs, or mock fixtures.
+Do not add code that stores passwords, National IDs, email/reset tokens,
+identity images, access tokens, or refresh tokens in localStorage,
+sessionStorage, query strings, analytics, or logs. Access tokens are held only
+in process memory; refresh tokens remain HttpOnly.
+
+## Live-capture boundary
+
+- Existing ID images and selfie uploads are not accepted.
+- Provider credentials travel only in a URL fragment to an exact configured
+  HTTPS provider origin.
+- Completion messages must match the expected origin, popup window, event type,
+  and session ID.
+- The provider popup is bounded to ten minutes and closed on completion.
+- Media never transits this frontend. Auth retrieves and verifies provider
+  evidence server-to-server.
+- Never add provider origins that are not operated or contractually approved by
+  MUCYORA.
 
 ## Asset security
 
