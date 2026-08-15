@@ -1,12 +1,12 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "node scripts/serve-static.mjs out 4173",
-      "startServerReadyPattern": "Serving",
+      "startServerCommand": "npm run start",
+      "startServerReadyPattern": "Ready",
       "url": [
-        "http://127.0.0.1:4173/",
-        "http://127.0.0.1:4173/login/",
-        "http://127.0.0.1:4173/create-account/"
+        "http://127.0.0.1:4000/",
+        "http://127.0.0.1:4000/login",
+        "http://127.0.0.1:4000/create-account"
       ],
       "numberOfRuns": 2,
       "settings": {
