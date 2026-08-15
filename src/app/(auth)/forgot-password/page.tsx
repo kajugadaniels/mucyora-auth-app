@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { ForgotPasswordForm } from "@/components/forms/ForgotPasswordForm";
-import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -23,7 +21,7 @@ export default function ForgotPasswordPage() {
     <AuthCard
       eyebrow="Account recovery"
       title="Recover access securely"
-      description="Enter an email address to preview a privacy-preserving recovery response. The same confirmation appears whether or not an account exists."
+      description="Enter your email address to request a privacy-preserving recovery link."
       footer={
         <div className={styles.footer}>
           <Link
@@ -36,11 +34,6 @@ export default function ForgotPasswordPage() {
       }
     >
       <div className={styles.content}>
-        <MockModeNotice compact>
-          Use a fake email only. This form does not contact a mail provider or
-          backend.
-        </MockModeNotice>
-
         <ForgotPasswordForm />
       </div>
     </AuthCard>
