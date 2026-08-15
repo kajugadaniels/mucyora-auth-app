@@ -59,7 +59,7 @@ The session-upgrade endpoint must rotate or revoke the limited refresh family be
 - revoke the server session;
 - clear refresh cookie;
 - clear in-memory access state;
-- redirect to a safe static sign-in route;
+- redirect to the safe same-origin sign-in route;
 - do not claim logout succeeded if server revocation failed.
 
 ## Recovery
