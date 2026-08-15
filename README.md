@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MUCYORA Auth Frontend
 
-## Getting Started
+Production-oriented Next.js authentication frontend for MUCYORA. It runs on
+port `4000` and exposes a server-side, same-origin gateway for the public
+`api/auth` contract. Browser code calls paths such as `/auth/login`; the private
+Auth service origin and port are never bundled into the browser.
 
-First, run the development server:
+## Current status
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 35 public Auth endpoints are registered as individual route files.
+- Internal operations, NIDA credentials, AWS credentials, Engine keys, and
+  service-to-service keys are not exposed.
+- Upstream status codes, JSON bodies, backend validation messages, correlation
+  IDs, retry metadata, and authentication cookies are preserved.
+- Business validation remains owned by `api/auth`; the proxy only enforces
+  transport boundaries such as same-origin access, body limits, safe URLs, and
+  timeouts.
+- UI forms still use the mock gateway. Connecting those forms is the next,
+  explicitly separate integration phase.
+
+## Local configuration
+
+Create `.env.local` from `.env.example`:
+
+```env
+NEXT_PUBLIC_SITE_URL=http://localhost:4000
+MUCYORA_AUTH_API_ORIGIN=http://127.0.0.1:3000
+MUCYORA_AUTH_PROXY_TIMEOUT_MS=30000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`MUCYORA_AUTH_API_ORIGIN` is server-only. Never rename it with a
+`NEXT_PUBLIC_` prefix.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Open `http://localhost:4000`. The backend must be running separately on its
+configured private origin.
 
-To learn more about Next.js, take a look at the following resources:
+## Quality gates
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run check:structure
+npm run typecheck
+npm test
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Endpoint-specific tests:
 
-## Deploy on Vercel
+```bash
+npm test -- --run src/server/auth-proxy.test.ts tests/auth-proxy-routes.test.ts
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Registered Auth endpoints](docs/auth-endpoint-proxy.md)
+- [Backend integration plan](docs/backend-integration-plan.md)
+- [Browser session model](docs/auth-session-browser-model.md)
+- [Security policy](SECURITY.md)
+- [Testing and release](docs/testing-and-release.md)
