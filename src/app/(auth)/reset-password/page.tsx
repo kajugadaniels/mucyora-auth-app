@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ArrowLeft } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { ResetPasswordExperience } from "@/components/auth/ResetPasswordExperience";
 import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
@@ -17,7 +17,7 @@ export default function ResetPasswordPage() {
     <AuthCard
       eyebrow="Set a new password"
       title="Choose a private passphrase"
-      description="Preview valid-link, expired-link, validation, loading, and completion states without changing a real credential."
+      description="Open your single-use recovery link and choose a new strong password."
       footer={
         <div className={styles.footer}>
           <LinkButton
@@ -31,11 +31,7 @@ export default function ResetPasswordPage() {
       }
     >
       <div className={styles.content}>
-        <MockModeNotice compact>
-          No reset token is read from the URL and no account password is
-          changed.
-        </MockModeNotice>
-        <ResetPasswordExperience />
+        <Suspense fallback={null}><ResetPasswordExperience /></Suspense>
       </div>
     </AuthCard>
   );
