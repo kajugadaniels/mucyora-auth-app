@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { ArrowLeft } from "lucide-react";
+import { Suspense } from "react";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { EmailVerificationForm } from "@/components/forms/EmailVerificationForm";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
-import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -19,7 +17,7 @@ export default function VerifyEmailPage() {
     <AuthCard
       eyebrow="Email verification"
       title="Confirm your email address"
-      description="Enter the static six-digit code and preview resend, invalid-code, expired-code, and success states."
+      description="Use the single-use link sent to your email address to continue identity verification."
       footer={
         <div className={styles.footer}>
           <Link
@@ -32,10 +30,7 @@ export default function VerifyEmailPage() {
       }
     >
       <div className={styles.content}>
-        <MockModeNotice compact>
-          No email was sent. Use the demonstration code shown in the form.
-        </MockModeNotice>
-        <EmailVerificationForm />
+        <Suspense fallback={null}><EmailVerificationForm /></Suspense>
       </div>
     </AuthCard>
   );
