@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { VerificationStepper } from "@/components/auth/VerificationStepper";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { RouteLoadingPanel } from "@/components/ui/RouteLoadingPanel";
@@ -40,8 +39,8 @@ export default function IdentityDocumentPage() {
     <AuthCard
       size="wide"
       eyebrow="Identity image"
-      title="Prepare a clear identity image"
-      description="Choose a non-sensitive demonstration image, review its preview, and simulate the media-validation and upload states."
+      title="Capture your National ID live"
+      description="Use the approved camera provider. Existing files and gallery uploads are not permitted."
       footer={
         <div className={styles.footer}>
           <LinkButton
@@ -56,11 +55,6 @@ export default function IdentityDocumentPage() {
     >
       <div className={styles.content}>
         <VerificationStepper currentStep="document" />
-
-        <MockModeNotice compact>
-          Select only a fake or non-sensitive image. The file remains local and
-          is never uploaded.
-        </MockModeNotice>
 
         <IdentityDocumentForm />
       </div>
