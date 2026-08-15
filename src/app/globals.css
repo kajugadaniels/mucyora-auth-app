@@ -164,17 +164,6 @@ svg {
   white-space: nowrap !important;
   border: 0 !important;
 }
-[data-sonner-toaster] {
-  --width: min(420px, calc(100vw - 24px));
-  font-family: var(--font-family);
-}
-[data-sonner-toast] {
-  border: 1px solid var(--color-border-soft) !important;
-  border-radius: var(--radius-md) !important;
-  background: var(--color-surface) !important;
-  color: var(--color-text) !important;
-  box-shadow: var(--shadow-lg) !important;
-}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -244,9 +233,6 @@ form {
     --page-padding-inline: 12px;
   }
 
-  [data-sonner-toaster] {
-    --width: calc(100vw - 16px);
-  }
 }
 
 @media (max-height: 620px) and (orientation: landscape) {
