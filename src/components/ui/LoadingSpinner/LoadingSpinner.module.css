@@ -36,7 +36,7 @@
 }
 
 /* Three meridians fixed at different angles; each one's inner
-   ellipse squashes on X to fake the sphere rotating underneath it. */
+   ellipse squashes on X to create the sphere-rotation illusion. */
 .meridianWrap {
   position: absolute;
   inset: 0;
