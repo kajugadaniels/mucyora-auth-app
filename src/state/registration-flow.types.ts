@@ -1,16 +1,12 @@
-import type { CitizenPreview } from "@/services/auth";
-
 export type RegistrationStep =
     | "CITIZEN_LOOKUP"
-    | "CITIZEN_REVIEW"
     | "CREDENTIALS"
     | "CONSENT"
     | "COMPLETE";
 
 export interface RegistrationFlowState {
     step: RegistrationStep;
-    challengeReference?: string;
-    citizen?: CitizenPreview;
+    registrationChallengeToken?: string;
     email?: string;
     maskedEmail?: string;
     userReference?: string;
@@ -19,10 +15,8 @@ export interface RegistrationFlowState {
 export type RegistrationFlowAction =
     | {
         type: "CITIZEN_FOUND";
-        challengeReference: string;
-        citizen: CitizenPreview;
+        registrationChallengeToken: string;
     }
-    | { type: "CITIZEN_CONFIRMED" }
     | { type: "CREDENTIALS_COMPLETED"; email: string }
     | {
         type: "REGISTRATION_COMPLETED";
