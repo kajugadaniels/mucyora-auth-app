@@ -1,179 +1,33 @@
 "use client";
-
-import { ArrowRight, FileImage, ShieldCheck, UploadCloud } from "lucide-react";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { Camera, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
-import { ImageField } from "@/components/ui/ImageField";
-import { LinkButton } from "@/components/ui/LinkButton";
-import { SelectField } from "@/components/ui/SelectField";
-import { authFlowConfig } from "@/config/auth-flow.config";
-import { identityDocumentFormSchema } from "@/lib/validation/identity.schemas";
-import { authGateway } from "@/mocks/services/MockAuthGateway";
-import {
-  isAuthGatewayError,
-  type IdentityDocumentScenario,
-  type UploadResult,
-} from "@/services/auth";
+import { authFlowState, authGateway, isAuthGatewayError } from "@/services/auth";
+import { openCaptureProvider } from "@/services/auth/provider-bridge";
 import styles from "./IdentityDocumentForm.module.css";
-
-const scenarioOptions = [
-  { value: "success", label: "Successful media preparation" },
-  { value: "rejected", label: "Media rejected" },
-  { value: "unavailable", label: "Storage provider unavailable" },
-];
-
 export function IdentityDocumentForm() {
-  const [file, setFile] = useState<File | null>(null);
-  const [scenario, setScenario] = useState<IdentityDocumentScenario>("success");
-  const [error, setError] = useState<string>();
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [result, setResult] = useState<UploadResult | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  function clearProgressTimer() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }
-
-  function handleFileChange(nextFile: File | null) {
-    setFile(nextFile);
-    setError(undefined);
-    setResult(null);
-    setUploadProgress(0);
-  }
-
-  async function submit() {
-    setError(undefined);
-    setResult(null);
-
-    const parsed = identityDocumentFormSchema.safeParse({ file, scenario });
-
-    if (!parsed.success) {
-      const message =
-        parsed.error.issues[0]?.message ?? "Choose a valid identity image.";
-      setError(message);
-      toast.error("Check the selected image", { description: message });
-      return;
-    }
-
-    setIsUploading(true);
-    setUploadProgress(8);
-
-    intervalRef.current = setInterval(() => {
-      setUploadProgress((current) =>
-        current >= 88 ? current : Math.min(88, current + 8),
-      );
-    }, 180);
-
+  const router = useRouter(); const [busy, setBusy] = useState(false); const [error, setError] = useState<string>();
+  const capture = async () => {
+    setBusy(true); setError(undefined);
     try {
-      const upload = await authGateway.submitIdentityDocument(parsed.data);
-      clearProgressTimer();
-      setUploadProgress(100);
-      setResult(upload);
-      toast.success("Identity image prepared", {
-        description:
-          "No file was uploaded. The mock gateway returned a local demonstration reference.",
-      });
-    } catch (caught) {
-      clearProgressTimer();
-      setUploadProgress(0);
-
-      if (isAuthGatewayError(caught) && caught.code === "MEDIA_REJECTED") {
-        const message =
-          "The static media checks rejected this demonstration scenario. Replace the image or select the successful scenario.";
-        setError(message);
-        toast.error("Image not accepted", { description: message });
-        return;
+      const state = authFlowState(); const attempt = state.attemptId ? await authGateway.identityAttempt(state.attemptId) : await authGateway.createIdentityAttempt();
+      const session = await authGateway.createDocumentCaptureSession(attempt.id);
+      await openCaptureProvider("document", session.sessionId, session.clientToken);
+      let completion = await authGateway.completeDocumentCapture(attempt.id);
+      for (let count = 0; completion.status === "PENDING" && count < 5; count += 1) {
+        await new Promise((resolve) => window.setTimeout(resolve, 1_500)); completion = await authGateway.completeDocumentCapture(attempt.id);
       }
-
-      if (
-        isAuthGatewayError(caught) &&
-        caught.code === "PROVIDER_UNAVAILABLE"
-      ) {
-        toast.error("Demonstration storage unavailable", {
-          description:
-            "The selected image remains only in this browser page and was not uploaded.",
-        });
-        return;
-      }
-
-      toast.error("The image could not be prepared");
-    } finally {
-      setIsUploading(false);
-    }
-  }
-
-  return (
-    <div className={styles.form}>
-      {result && (
-        <Alert variant="success" title="Static document step completed">
-          The local mock reference is <strong>{result.uploadReference}</strong>.
-          No image left your device.
-        </Alert>
-      )}
-
-      <ImageField
-        label="Identity image"
-        icon={<FileImage size={22} />}
-        accept={[...authFlowConfig.image.acceptedTypes]}
-        maxSizeBytes={authFlowConfig.image.maximumBytes}
-        value={file}
-        error={error}
-        hint="Choose a fake or non-sensitive JPEG or PNG image for this static demonstration."
-        disabled={isUploading}
-        isUploading={isUploading}
-        uploadProgress={uploadProgress}
-        onChange={handleFileChange}
-      />
-
-      <div className={styles.scenario}>
-        <SelectField
-          label="Static upload result"
-          icon={<ShieldCheck size={16} />}
-          value={scenario}
-          options={scenarioOptions}
-          disabled={isUploading}
-          onChange={(event) => {
-            setScenario(event.target.value as IdentityDocumentScenario);
-            setResult(null);
-          }}
-          hint="This development control changes only the local mock response."
-        />
-      </div>
-
-      <div className={styles.actions}>
-        <Button
-          icon={<UploadCloud size={16} />}
-          isLoading={isUploading}
-          loadingText="Preparing image"
-          disabled={!file || Boolean(result)}
-          onClick={submit}
-          fullWidth
-        >
-          Prepare identity image
-        </Button>
-
-        {result && (
-          <LinkButton
-            href="/identity-verification/live-check"
-            icon={<ArrowRight size={16} />}
-            iconPosition="right"
-            fullWidth
-          >
-            Continue to live check
-          </LinkButton>
-        )}
-      </div>
-
-      <p className={styles.privacy}>
-        This static phase creates an in-browser preview only. It does not send
-        the file to MUCYORA, object storage, NIDA, or the biometric Engine.
-      </p>
-    </div>
-  );
+      if (completion.status !== "CONFIRMED") throw new Error("Document capture is still being processed. Please try again shortly.");
+      router.push("/identity-verification/live-check");
+    } catch (caught) { setError(isAuthGatewayError(caught) ? caught.message : caught instanceof Error ? caught.message : "Document capture could not be completed."); }
+    finally { setBusy(false); }
+  };
+  return <div className={styles.form}>
+    {error && <Alert variant="error" title="Document capture not completed">{error}</Alert>}
+    <Alert variant="info" title="Live camera capture only">MUCYORA does not accept uploaded ID images. The approved capture provider will open a protected camera session.</Alert>
+    <div className={styles.actions}><Button icon={<Camera size={16} />} isLoading={busy} loadingText="Opening secure capture" onClick={() => void capture()} fullWidth>Capture National ID live</Button></div>
+    <p className={styles.privacy}><ShieldCheck size={15} aria-hidden="true" />The provider token is short-lived and bound to this verification attempt. MUCYORA confirms evidence directly with the provider.</p>
+  </div>;
 }
