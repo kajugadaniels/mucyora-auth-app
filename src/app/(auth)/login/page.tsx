@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { LoginForm } from "@/components/forms/LoginForm";
 import styles from "./page.module.css";
 
@@ -18,7 +17,7 @@ export default function LoginPage() {
     <AuthCard
       eyebrow="Welcome back"
       title="Sign in to MUCYORA"
-      description="Enter your account credentials. This phase uses a local mock gateway and does not create a real session."
+      description="Enter your account credentials to create a protected MUCYORA session."
       footer={
         <div className={styles.footer}>
           <p>
