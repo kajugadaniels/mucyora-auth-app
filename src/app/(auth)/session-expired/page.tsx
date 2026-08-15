@@ -25,7 +25,7 @@ export default function Page() {
           iconLabel="Session expired"
           alertVariant="info"
           alertTitle="Sign in again to continue"
-          alertMessage="The static frontend does not retain passwords, identity images, one-time codes, or unsent sensitive form values."
+          alertMessage="The Auth frontend does not retain passwords, identity images, email tokens, or unsent sensitive form values."
           details={[
             {
               label: "Account state",
@@ -33,7 +33,7 @@ export default function Page() {
             },
             {
               label: "Sensitive values",
-              value: "Not retained by this static demonstration",
+              value: "Not retained by the Auth frontend",
             },
             {
               label: "Recommended action",
