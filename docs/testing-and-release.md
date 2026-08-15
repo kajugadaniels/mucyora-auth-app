@@ -1,4 +1,4 @@
-# Testing and Static Release Readiness
+# Testing and Server Release Readiness
 
 ## Unit and component tests
 
@@ -37,22 +37,23 @@ npm run test:visual
 
 CI intentionally runs visual regression only after snapshot baselines exist.
 
-## Static release gate
+## Release gate
 
 ```bash
 npm run release:check
 npm run lighthouse
 ```
 
-Expected output:
+Expected evidence:
 
 ```text
-out/
-reports/static-export-analysis.json
+.next/
 reports/playwright/
 reports/lighthouse/
 ```
 
 ## Release restrictions
 
-The static build remains a demonstration. It must not be presented as real NIDA, email, account, session, upload, camera, or biometric functionality.
+The endpoint registration layer is production-oriented, but the current forms
+remain on the mock gateway until the explicit UI integration phase. Do not
+present mock NIDA, email, account, camera, or biometric behavior as live.
