@@ -1,6 +1,16 @@
 import type { AuthGateway } from "./AuthGateway";
 import { AuthGatewayError } from "./auth.errors";
-import { authFlowState, browserDeviceId, browserDeviceLabel, clearAuthSession, getAccessToken, setAuthSession } from "./auth-session";
+import {
+  authFlowState,
+  beginRegistrationSubmission,
+  browserClientInstanceId,
+  browserDeviceId,
+  browserDeviceLabel,
+  clearAuthSession,
+  getAccessToken,
+  registrationIdempotencyKey,
+  setAuthSession,
+} from "./auth-session";
 import type { AcceptedResult, ApiPayload, AuthSessionRecord, AuthTokenResult, ChangedResult, CitizenLookupInput, CitizenLookupResult, DocumentCaptureCompletion, DocumentCaptureSession, IdentityCompletionResult, LivenessSession, LoginInput, RecoveryCodeResult, RegisterInput, RegisterResult, VerificationAttempt, VerificationSubmission, VerifyEmailResult, WebAuthnPayload } from "./auth.types";
 
 const CSRF_COOKIE_NAME = process.env.NEXT_PUBLIC_MUCYORA_CSRF_COOKIE_NAME || "mucyora_csrf";
@@ -75,8 +85,30 @@ export class HttpAuthGateway implements AuthGateway {
   changePassword(currentPassword: string, newPassword: string) { return authorized<ChangedResult>("/auth/password/change", { method: "POST", body: JSON.stringify({ currentPassword, newPassword }) }); }
   forgotPassword(email: string) { return request<AcceptedResult>("/auth/password/forgot", { method: "POST", body: JSON.stringify({ email }) }); }
   resetPassword(token: string, newPassword: string) { return request<ChangedResult>("/auth/password/reset", { method: "POST", body: JSON.stringify({ token, newPassword }) }); }
-  lookupCitizen(input: CitizenLookupInput) { return request<CitizenLookupResult>("/registration/citizen/lookup", { method: "POST", body: JSON.stringify({ nid: input.nationalId }) }); }
-  register(input: RegisterInput) { return request<RegisterResult>("/registration", { method: "POST", body: JSON.stringify(input) }); }
+  async lookupCitizen(input: CitizenLookupInput) {
+    const result = await request<CitizenLookupResult>(
+      "/registration/citizen/lookup",
+      {
+        method: "POST",
+        headers: {
+          "X-Client-Instance-Id": browserClientInstanceId(),
+        },
+        body: JSON.stringify({ nid: input.nationalId }),
+      },
+    );
+    beginRegistrationSubmission();
+    return result;
+  }
+  register(input: RegisterInput) {
+    return request<RegisterResult>("/registration", {
+      method: "POST",
+      headers: {
+        "Idempotency-Key": registrationIdempotencyKey(),
+        "X-Client-Instance-Id": browserClientInstanceId(),
+      },
+      body: JSON.stringify(input),
+    });
+  }
   verifyEmail(token: string) { return request<VerifyEmailResult>("/registration/email/verify", { method: "POST", body: JSON.stringify({ token }) }); }
   resendVerification(email: string) { return request<AcceptedResult>("/registration/email/resend", { method: "POST", body: JSON.stringify({ email }) }); }
   async exchangeIdentitySession(token: string) { const result = await request<AuthTokenResult>("/registration/identity-session", { method: "POST", body: JSON.stringify({ token, deviceId: browserDeviceId(), deviceLabel: browserDeviceLabel(), transport: "COOKIE" }) }); setAuthSession(result); return result; }
