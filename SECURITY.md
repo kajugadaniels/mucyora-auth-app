@@ -3,8 +3,29 @@
 
 ## Current boundary
 
-This repository is a static authentication UI foundation. It must not contact the MUCYORA Auth
-backend, NIDA, object storage, email providers, or the biometric Engine during Phases 1-3.
+This application is the browser-facing authentication UI and same-origin Auth
+gateway. Browser code may call only registered local routes. Only server-side
+route handlers may contact the configured `api/auth` origin.
+
+The frontend must never call NIDA, object storage, mail providers, the biometric
+Engine, or internal Auth endpoints directly.
+
+## Proxy controls
+
+- `MUCYORA_AUTH_API_ORIGIN` is server-only and must never use `NEXT_PUBLIC_`.
+- Non-loopback upstream origins require HTTPS and cannot contain credentials,
+  paths, queries, or fragments.
+- Each approved backend operation has one explicit route file; there is no
+  catch-all proxy and no caller-controlled upstream URL.
+- Cross-site requests are rejected before upstream access.
+- Request headers are allowlisted and bodies are bounded to the Auth service's
+  256 KiB limit.
+- Redirects are not followed and responses are never cached.
+- Backend response bodies and user-facing messages are forwarded unchanged.
+- Proxy-generated infrastructure failures contain no fabricated business error
+  or success message.
+- Backend cookie domains are removed. HttpOnly credentials are scoped to
+  `/auth`; browser-readable CSRF cookies remain available to same-origin pages.
 
 ## Prohibited data handling
 
@@ -22,7 +43,8 @@ external resource references.
 - Generate and commit `package-lock.json` on the developer machine.
 - Use `npm ci` after the lock file exists.
 - Run `npm audit --audit-level=high` in the connected development environment.
-- Keep the static-export boundary until backend integration is explicitly authorized.
+- Deploy with a supported Node.js runtime; static hosting cannot execute the
+  same-origin route handlers.
 - Do not publish source maps without review.
 
 ## Reporting
