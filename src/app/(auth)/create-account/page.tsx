@@ -1,10 +1,6 @@
-import { Login01Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { CreateAccountFlow } from "@/components/auth/CreateAccountFlow";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
-import { LinkButton } from "@/components/ui/LinkButton";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -22,7 +18,7 @@ export default function CreateAccountPage() {
       // size="wide"
       eyebrow="Create your account"
       title="Start with your verified identity"
-      description="Follow the static NID registration flow, review the fake citizen match, create credentials, and acknowledge the required policies."
+      description="Confirm your Rwanda National ID, create secure credentials, and record the required policy consents."
       footer={
         <div className={styles.footer}>
           <p>
