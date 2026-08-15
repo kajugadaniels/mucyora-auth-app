@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { vi } from "vitest";
@@ -27,21 +27,22 @@ describe("ImageField", () => {
       input,
       new File(["image"], "identity.png", { type: "image/png" }),
     );
-    expect(await screen.findByAltText("Selected preview")).toBeInTheDocument();
+    expect(
+      await screen.findByAltText("Selected image preview"),
+    ).toBeInTheDocument();
     expect(createSpy).toHaveBeenCalled();
     expect(
       screen.getByRole("button", { name: /remove selected image/i }),
     ).toBeInTheDocument();
   });
 
-  it("shows a local error for an unsupported file", async () => {
-    const user = userEvent.setup();
+  it("shows a local error for an unsupported file", () => {
     render(<Harness />);
-    await user.upload(
-      screen.getByLabelText("Identity image"),
-      new File(["text"], "notes.txt", { type: "text/plain" }),
-      { applyAccept: false },
-    );
+    fireEvent.change(screen.getByLabelText("Identity image"), {
+      target: {
+        files: [new File(["text"], "notes.txt", { type: "text/plain" })],
+      },
+    });
     expect(screen.getByRole("alert")).toHaveTextContent(
       /choose one of these image types/i,
     );
