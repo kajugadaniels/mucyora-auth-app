@@ -8,7 +8,6 @@ const required = [
   "src/app/layout.tsx",
   "src/app/globals.css",
   "src/app/(auth)/page.tsx",
-  "src/app/(auth)/page.module.css",
   "src/app/(auth)/login/page.tsx",
   "src/app/(auth)/login/page.module.css",
   "src/app/(auth)/create-account/page.tsx",
@@ -59,6 +58,7 @@ const required = [
   "src/components/forms/LiveCheckForm/LiveCheckForm.tsx",
   "src/mocks/services/MockAuthGateway.ts",
   "src/services/auth/AuthGateway.ts",
+  "src/server/auth-proxy.ts",
   "src/lib/validation/auth.schemas.ts",
 ];
 
@@ -75,7 +75,7 @@ for (const forbidden of [
   "tailwind.config.ts",
 ]) {
   if (existsSync(join(root, forbidden))) {
-    errors.push(`Forbidden in the static frontend: ${forbidden}`);
+    errors.push(`Forbidden by the Auth frontend boundary: ${forbidden}`);
   }
 }
 
@@ -112,8 +112,14 @@ for (const file of walk(join(root, "src"))) {
     "getUserMedia(",
     "MediaRecorder(",
   ]) {
+    if (
+      forbidden === "fetch(" &&
+      name === "src/server/auth-proxy.ts"
+    ) {
+      continue;
+    }
     if (source.includes(forbidden)) {
-      errors.push(`${name} contains forbidden static-phase behavior: ${forbidden}`);
+      errors.push(`${name} contains forbidden browser-side behavior: ${forbidden}`);
     }
   }
 }
@@ -123,6 +129,10 @@ for (const forbidden of ["API_URL", "TOKEN", "SECRET", "PASSWORD"]) {
   if (env.includes(forbidden)) {
     errors.push(`.env.example contains forbidden static-phase key fragment: ${forbidden}`);
   }
+}
+
+if (env.includes("NEXT_PUBLIC_MUCYORA_AUTH_API_ORIGIN")) {
+  errors.push("The private Auth backend origin must never be exposed with NEXT_PUBLIC_.");
 }
 
 function assertComponentModules(componentRoot) {
