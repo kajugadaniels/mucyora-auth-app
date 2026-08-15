@@ -8,7 +8,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { IdentityGuide } from "@/components/auth/IdentityGuide";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { SecurityNotice } from "@/components/auth/SecurityNotice";
 import { VerificationStepper } from "@/components/auth/VerificationStepper";
 import { LinkButton } from "@/components/ui/LinkButton";
@@ -30,12 +29,12 @@ const processDetails = [
   {
     icon: Shield01Icon,
     title: "Identity image",
-    text: "Prepare a clear identity image for controlled private validation.",
+    text: "Capture your physical Rwanda National ID through the approved live-camera provider.",
   },
   {
     icon: LockKeyIcon,
     title: "Guided live check",
-    text: "Complete a short live-face step that will later use the protected biometric Engine.",
+    text: "Complete a short live-face step through the approved liveness provider.",
   },
   {
     icon: Clock01Icon,
@@ -50,15 +49,10 @@ export default function IdentityVerificationPage() {
       size="wide"
       eyebrow="Identity verification"
       title="Prepare for a secure identity check"
-      description="Review the steps, privacy protections, and capture guidance before continuing. Everything remains static until backend integration."
+      description="Review the live-capture steps and privacy protections before continuing."
     >
       <div className={styles.content}>
         <VerificationStepper currentStep="introduction" />
-
-        <MockModeNotice compact>
-          This demonstration does not open a camera, upload an image, call NIDA,
-          or send evidence to the MUCYORA Engine.
-        </MockModeNotice>
 
         <div className={styles.process}>
           {processDetails.map(({ icon, title, text }) => (
@@ -84,7 +78,7 @@ export default function IdentityVerificationPage() {
 
         <SecurityNotice>
           Identity images and live verification evidence are sensitive. The
-          future integrated flow will use private, attempt-bound storage, strict
+          verification flow uses private, attempt-bound storage, strict
           retention, and authenticated service calls.
         </SecurityNotice>
 
