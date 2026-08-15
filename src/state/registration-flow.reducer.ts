@@ -10,8 +10,7 @@ export const initialRegistrationFlowState: RegistrationFlowState = {
 
 const previousStep: Record<RegistrationStep, RegistrationStep> = {
     CITIZEN_LOOKUP: "CITIZEN_LOOKUP",
-    CITIZEN_REVIEW: "CITIZEN_LOOKUP",
-    CREDENTIALS: "CITIZEN_REVIEW",
+    CREDENTIALS: "CITIZEN_LOOKUP",
     CONSENT: "CREDENTIALS",
     COMPLETE: "CONSENT",
 };
@@ -24,14 +23,8 @@ export function registrationFlowReducer(
         case "CITIZEN_FOUND":
             return {
                 ...state,
-                step: "CITIZEN_REVIEW",
-                challengeReference: action.challengeReference,
-                citizen: action.citizen,
-            };
-        case "CITIZEN_CONFIRMED":
-            return {
-                ...state,
                 step: "CREDENTIALS",
+                registrationChallengeToken: action.registrationChallengeToken,
             };
         case "CREDENTIALS_COMPLETED":
             return {
