@@ -14,7 +14,6 @@ export * from "./OtpInput";
 export * from "./PasswordInput";
 export * from "./ProgressBar";
 export * from "./SelectField";
-export * from "./SonnerProvider";
 export * from "./StatusIcon";
 export * from "./TextareaField";
 export * from "./VisuallyHidden";
