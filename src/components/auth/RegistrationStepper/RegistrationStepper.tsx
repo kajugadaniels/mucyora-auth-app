@@ -5,17 +5,15 @@ import styles from "./RegistrationStepper.module.css";
 
 const steps: Array<{ key: RegistrationStep; label: string }> = [
   { key: "CITIZEN_LOOKUP", label: "National ID" },
-  { key: "CITIZEN_REVIEW", label: "Review" },
   { key: "CREDENTIALS", label: "Account" },
   { key: "CONSENT", label: "Consent" },
 ];
 
 const stepIndex: Record<RegistrationStep, number> = {
   CITIZEN_LOOKUP: 0,
-  CITIZEN_REVIEW: 1,
-  CREDENTIALS: 2,
-  CONSENT: 3,
-  COMPLETE: 4,
+  CREDENTIALS: 1,
+  CONSENT: 2,
+  COMPLETE: 3,
 };
 
 export interface RegistrationStepperProps {
