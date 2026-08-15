@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { MockModeNotice } from "@/components/auth/MockModeNotice";
 import { VerificationStepper } from "@/components/auth/VerificationStepper";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { RouteLoadingPanel } from "@/components/ui/RouteLoadingPanel";
@@ -17,7 +16,7 @@ const LiveCheckForm = dynamic(
     loading: () => (
       <RouteLoadingPanel
         title="Preparing live-check controls"
-        description="The static camera and capture simulation is loading."
+        description="The protected liveness provider handoff is loading."
       />
     ),
   },
@@ -41,7 +40,7 @@ export default function LiveCheckPage() {
       size="wide"
       eyebrow="Guided live check"
       title="Center your face and follow the guidance"
-      description="Preview camera permission, capture progress, provider outcomes, and recovery messages without opening a real camera."
+      description="Complete the approved provider's live-face and liveness checks."
       footer={
         <div className={styles.footer}>
           <LinkButton
@@ -56,11 +55,6 @@ export default function LiveCheckPage() {
     >
       <div className={styles.content}>
         <VerificationStepper currentStep="live-check" />
-
-        <MockModeNotice compact>
-          This is a visual simulation only. It does not perform face comparison
-          or liveness detection.
-        </MockModeNotice>
 
         <LiveCheckForm />
       </div>
