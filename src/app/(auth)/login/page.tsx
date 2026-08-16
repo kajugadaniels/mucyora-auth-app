@@ -19,7 +19,7 @@ export default function LoginPage() {
           <header className={styles.heading}>
             <span className={styles.eyebrow}>Welcome back</span>
             <h1 id="auth-page-title" tabIndex={-1}>
-              Sign in to MUCYORA
+              Sign in
             </h1>
             <p id="auth-page-description">
               Enter your account credentials to create a protected MUCYORA
