@@ -78,20 +78,3 @@
     padding-bottom: var(--space-4);
   }
 }
-
-/* The login route owns its complete viewport; other auth routes retain the
-   shared padded page surface above. */
-.shell:has([data-auth-layout="login"]),
-.shell:has([data-auth-layout="login"]) .formPanel {
-  background: var(--color-surface);
-}
-
-.shell:has([data-auth-layout="login"]) .main {
-  display: block;
-  padding: 0;
-}
-
-.shell:has([data-auth-layout="login"]) .mainContent {
-  display: block;
-  min-height: 100dvh;
-}
