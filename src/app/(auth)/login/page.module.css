@@ -1,19 +1,76 @@
-.content {
-  display: grid;
-  gap: var(--space-5);
+.page {
+  display: flex;
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background: var(--color-surface);
 }
 
-.footer {
+/* ---------- Left side: form (50%, centered, white, no shadow/border) ---------- */
+
+.formSide {
   display: flex;
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  text-align: center;
+  background: var(--color-surface);
+  padding: var(--space-8) clamp(24px, 4vw, 64px);
 }
 
-.footer p {
+.formWrapper {
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.heading {
+  margin-bottom: var(--space-8);
+  text-align: left;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heading h1 {
+  color: var(--color-text);
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.heading h1:focus {
+  outline: none;
+}
+
+.heading h1:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 6px;
+}
+
+.heading p {
+  margin-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
+  line-height: 1.65;
+}
+
+.createAccount {
+  margin-top: var(--space-6);
   color: var(--color-text-secondary);
   font-size: var(--font-size-label);
+  text-align: center;
 }
 
 .createAccountLink {
@@ -38,9 +95,75 @@
   outline-offset: 3px;
 }
 
+/* ---------- Legal footer, below the form, centered ---------- */
+
+.legalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-10);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+}
+
+.legalFooter a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.legalFooter a:hover {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legalFooter a:focus-visible {
+  border-radius: var(--radius-xs);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-border-soft);
+}
+
+/* ---------- Right side: full-bleed image (50%, no padding/margin) ---------- */
+
+.imageSide {
+  flex: 0 0 50%;
+  width: 50%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background-image: url("https://adventure.com/wp-content/uploads/2019/01/Hero-Rwanda-25-years-on-Ruhondo-Lake.-c.-Virunga-Lodge-1920x1080.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .imageSide {
+    display: none;
+  }
+
+  .formSide {
+    flex: 1 1 100%;
+    width: 100%;
+    min-height: 100dvh;
+    padding: var(--space-7) var(--space-5);
+  }
+}
+
 @media (max-width: 480px) {
-  .footer {
-    align-items: stretch;
-    flex-direction: column;
+  .legalFooter {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
   }
 }
