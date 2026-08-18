@@ -5,19 +5,43 @@ import styles from "./PasswordRequirements.module.css";
 export interface PasswordRequirementsProps {
   password: string;
   email?: string;
+  confirmation?: string;
 }
 
 export function PasswordRequirements({
   password,
   email = "",
+  confirmation,
 }: PasswordRequirementsProps) {
   const emailName = email.split("@")[0]?.trim().toLowerCase() ?? "";
   const guidance = [
     {
-      label: "At least 15 characters",
-      met: password.length >= 15,
+      label: "At least 8 characters",
+      met: Array.from(password).length >= 8,
       required: true,
     },
+    {
+      label: "At least one uppercase letter",
+      met: /\p{Lu}/u.test(password),
+      required: true,
+    },
+    {
+      label: "At least one number",
+      met: /\p{N}/u.test(password),
+      required: true,
+    },
+    {
+      label: "At least one symbol",
+      met: /[\p{P}\p{S}]/u.test(password),
+      required: true,
+    },
+    ...(confirmation !== undefined
+      ? [{
+          label: "Passwords match",
+          met: password.length > 0 && password === confirmation,
+          required: true,
+        }]
+      : []),
     {
       label: "Does not contain your email name",
       met:
@@ -27,7 +51,7 @@ export function PasswordRequirements({
     },
     {
       label: "20 or more characters for a stronger passphrase",
-      met: password.length >= 20,
+      met: Array.from(password).length >= 20,
       required: false,
     },
   ];
