@@ -1,8 +1,11 @@
 .flow {
+  width: 100%;
   display: grid;
   gap: var(--space-8);
+  justify-items: center;
 }
 .stage {
+  width: min(100%, 560px);
   min-height: 360px;
 }
 .review {
