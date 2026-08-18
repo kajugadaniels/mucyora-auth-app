@@ -15,7 +15,8 @@ export const metadata: Metadata = {
 export default function CreateAccountPage() {
   return (
     <AuthCard
-      // size="wide"
+      size="wide"
+      className={styles.card}
       eyebrow="Create your account"
       title="Start with your verified identity"
       description="Confirm your Rwanda National ID, create secure credentials, and record the required policy consents."
