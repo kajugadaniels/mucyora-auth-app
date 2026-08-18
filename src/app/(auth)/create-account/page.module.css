@@ -1,6 +1,11 @@
+.card {
+  text-align: center;
+}
+
 .content {
   display: grid;
   gap: var(--space-6);
+  justify-items: center;
 }
 
 .footer {
