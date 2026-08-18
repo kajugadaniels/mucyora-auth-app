@@ -20,6 +20,7 @@ export interface RegistrationFormValues {
   email: string;
   phoneNumber: string;
   password: string;
+  confirmPassword: string;
   acceptedTerms: boolean;
   acceptedPrivacy: boolean;
   acceptedIdentityDataProcessing: boolean;
@@ -51,6 +52,7 @@ export function CreateAccountForm({
   } = form;
 
   const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
   const email = watch("email");
 
   if (step === "CREDENTIALS") {
@@ -81,7 +83,9 @@ export function CreateAccountForm({
             placeholder="name@example.com"
             error={errors.email?.message}
             disabled={isSubmitting}
-            {...register("email")}
+            {...register("email", {
+              required: "Email address is required.",
+            })}
           />
 
           <Input
@@ -93,7 +97,9 @@ export function CreateAccountForm({
             placeholder="+250 788 123 456"
             error={errors.phoneNumber?.message}
             disabled={isSubmitting}
-            {...register("phoneNumber")}
+            {...register("phoneNumber", {
+              required: "Rwandan phone number is required.",
+            })}
           />
 
           <PasswordInput
@@ -102,12 +108,28 @@ export function CreateAccountForm({
             placeholder="Use a long private passphrase"
             error={errors.password?.message}
             disabled={isSubmitting}
-            {...register("password")}
+            {...register("password", {
+              required: "Password is required.",
+              validate: validatePassword,
+            })}
+          />
+
+          <PasswordInput
+            label="Confirm password"
+            autoComplete="new-password"
+            placeholder="Enter the same password again"
+            error={errors.confirmPassword?.message}
+            disabled={isSubmitting}
+            {...register("confirmPassword", {
+              required: "Please confirm your password.",
+              validate: (value) =>
+                value === password || "Passwords must match.",
+            })}
           />
 
         </div>
 
-        <PasswordRequirements password={password ?? ""} email={email ?? ""} />
+        <PasswordRequirements password={password ?? ""} email={email ?? ""} confirmation={confirmPassword ?? ""} />
 
         <div className={styles.actions}>
           <Button
@@ -209,4 +231,16 @@ export function CreateAccountForm({
       </div>
     </form>
   );
+}
+
+function validatePassword(value: string): true | string {
+  const length = Array.from(value).length;
+
+  if (length < 8 || length > 128) {
+    return "Password must be between 8 and 128 characters.";
+  }
+  if (!/\p{Lu}/u.test(value) || !/\p{N}/u.test(value) || !/[\p{P}\p{S}]/u.test(value)) {
+    return "Password must include an uppercase letter, a number, and a symbol.";
+  }
+  return true;
 }
