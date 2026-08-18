@@ -15,7 +15,7 @@ import { RegistrationFlowProvider, useRegistrationFlow } from "@/state/Registrat
 import styles from "./CreateAccountFlow.module.css";
 
 const policyVersion = process.env.NEXT_PUBLIC_MUCYORA_IDENTITY_POLICY_VERSION || "2026-07-01";
-const defaultValues: RegistrationFormValues = { email: "", phoneNumber: "", password: "", acceptedTerms: false, acceptedPrivacy: false, acceptedIdentityDataProcessing: false, acceptedBiometricProcessing: false };
+const defaultValues: RegistrationFormValues = { email: "", phoneNumber: "", password: "", confirmPassword: "", acceptedTerms: false, acceptedPrivacy: false, acceptedIdentityDataProcessing: false, acceptedBiometricProcessing: false };
 
 function Content() {
   const { state, dispatch } = useRegistrationFlow();
@@ -23,7 +23,10 @@ function Content() {
   const [error, setError] = useState<string>();
   const form = useForm<RegistrationFormValues>({ defaultValues });
   const citizenFound = (result: CitizenLookupResult) => dispatch({ type: "CITIZEN_FOUND", registrationChallengeToken: result.registrationChallengeToken });
-  const credentialsContinue = async () => dispatch({ type: "CREDENTIALS_COMPLETED", email: form.getValues("email") });
+  const credentialsContinue = async () => {
+    const valid = await form.trigger(["email", "phoneNumber", "password", "confirmPassword"]);
+    if (valid) dispatch({ type: "CREDENTIALS_COMPLETED", email: form.getValues("email") });
+  };
   const registerAccount = async (values: RegistrationFormValues) => {
     setError(undefined);
     if (!state.registrationChallengeToken) return dispatch({ type: "RESET" });
@@ -34,7 +37,7 @@ function Content() {
       if (values.acceptedIdentityDataProcessing) consents.push({ type: "IDENTITY_DATA_PROCESSING", policyVersion });
       if (values.acceptedBiometricProcessing) consents.push({ type: "BIOMETRIC_PROCESSING", policyVersion });
       const result = await submission.run(() => authGateway.register({
-        registrationChallengeToken: state.registrationChallengeToken!, email: values.email, phoneNumber: values.phoneNumber, password: values.password,
+        registrationChallengeToken: state.registrationChallengeToken!, email: values.email, phoneNumber: values.phoneNumber, password: values.password, confirmPassword: values.confirmPassword,
         consents,
       }));
       if (!result) return;
@@ -44,7 +47,7 @@ function Content() {
     } catch (caught) {
       if (!isAuthGatewayError(caught)) throw caught;
       setError(caught.message);
-      if (caught.field === "email" || caught.field === "phoneNumber" || caught.field === "password") {
+      if (caught.field === "email" || caught.field === "phoneNumber" || caught.field === "password" || caught.field === "confirmPassword") {
         dispatch({ type: "RETURN_TO_CREDENTIALS" });
         form.setError(caught.field, { message: caught.message });
       }
