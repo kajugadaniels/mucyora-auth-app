@@ -22,9 +22,16 @@ export interface RegistrationStepperProps {
 
 export function RegistrationStepper({ currentStep }: RegistrationStepperProps) {
   const currentIndex = stepIndex[currentStep];
+  const displayStep = Math.min(currentIndex + 1, steps.length);
 
   return (
     <nav className={styles.stepper} aria-label="Account creation progress">
+      <div className={styles.summary} aria-live="polite">
+        <span className={styles.summaryLabel}>Secure registration</span>
+        <span className={styles.summaryValue}>
+          Step {displayStep} of {steps.length}
+        </span>
+      </div>
       <ol>
         {steps.map((step, index) => {
           const isComplete = index < currentIndex;
