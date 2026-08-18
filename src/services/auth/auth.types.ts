@@ -6,7 +6,7 @@ export interface CitizenLookupInput { nationalId: string; }
 export interface CitizenLookupResult { registrationChallengeToken: string; expiresAt: string; nextAction: "COMPLETE_REGISTRATION"; }
 export type ConsentType = "IDENTITY_DATA_PROCESSING" | "BIOMETRIC_PROCESSING" | "TERMS_OF_SERVICE" | "PRIVACY_POLICY";
 export interface RegistrationConsent { type: ConsentType; policyVersion: string; }
-export interface RegisterInput { registrationChallengeToken: string; email: string; phoneNumber: string; password: string; consents: RegistrationConsent[]; }
+export interface RegisterInput { registrationChallengeToken: string; email: string; phoneNumber: string; password: string; confirmPassword: string; consents: RegistrationConsent[]; }
 export interface RegisterResult { userReference: string; maskedEmail: string; emailVerificationRequired: true; identityVerificationRequired: true; nextAction: "VERIFY_EMAIL"; }
 export interface VerifyEmailResult { status: "verified"; nextAction: "IDENTITY_VERIFICATION"; identityEnrolmentToken: string; identityEnrolmentTokenExpiresIn: number; redirectUrl: string; }
 export interface AcceptedResult { status: "accepted"; }
