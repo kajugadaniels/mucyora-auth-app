@@ -1,10 +1,41 @@
 .stepper {
-  width: 100%;
+  width: min(100%, 620px);
   overflow: hidden;
 }
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-caption);
+  line-height: 1.25;
+}
+
+.summaryLabel {
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.summaryValue {
+  padding: 6px 10px;
+  border: 1px solid var(--color-primary-border);
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-active);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .stepper ol {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -16,42 +47,50 @@
   gap: var(--space-2);
   min-width: 0;
   color: var(--color-text-muted);
-  font-size: var(--font-size-caption);
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
   text-align: center;
 }
 .step:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 15px;
-  left: calc(50% + 20px);
-  width: calc(100% - 40px);
-  height: 1px;
+  top: 21px;
+  left: calc(50% + 27px);
+  width: calc(100% - 54px);
+  height: 2px;
   background: var(--color-border);
 }
 .marker {
   position: relative;
   z-index: 1;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border: 1px solid var(--color-border);
-  border-radius: 50%;
+  border-radius: 14px;
   background: var(--color-surface);
   color: var(--color-text-muted);
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-label);
+  font-variant-numeric: tabular-nums;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 .current {
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 .current .marker {
   border-color: var(--color-primary);
-  color: var(--color-primary);
-  box-shadow: 0 0 0 4px var(--color-primary-soft);
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 0 0 5px var(--color-primary-soft);
 }
 .complete {
-  color: var(--color-success);
+  color: var(--color-text-secondary);
 }
 .complete .marker {
   border-color: var(--color-success);
@@ -67,14 +106,37 @@
   white-space: nowrap;
 }
 @media (max-width: 480px) {
+  .summary {
+    margin-bottom: var(--space-3);
+  }
+
   .stepper ol {
     gap: var(--space-1);
   }
+
+  .marker {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
   .label {
     font-size: 10px;
   }
   .step:not(:last-child)::after {
-    left: calc(50% + 17px);
-    width: calc(100% - 34px);
+    top: 19px;
+    left: calc(50% + 24px);
+    width: calc(100% - 48px);
+  }
+}
+
+@media (max-width: 360px) {
+  .summaryLabel {
+    font-size: 11px;
+  }
+
+  .summaryValue {
+    padding-inline: 8px;
+    font-size: 10px;
   }
 }
