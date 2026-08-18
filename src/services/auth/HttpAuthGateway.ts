@@ -31,7 +31,7 @@ function backendMessage(body: unknown): string {
 }
 
 function fieldFrom(message: string): string | undefined {
-  return ["email", "phoneNumber", "password", "nationalId", "token", "consents"].find((field) => message.toLowerCase().includes(field.toLowerCase()));
+  return ["email", "phoneNumber", "confirmPassword", "password", "nationalId", "token", "consents"].find((field) => message.toLowerCase().includes(field.toLowerCase()));
 }
 
 async function request<Result>(path: string, options: RequestInit = {}): Promise<Result> {
