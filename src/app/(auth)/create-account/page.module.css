@@ -1,19 +1,19 @@
 .card {
-  text-align: center;
+  text-align: start;
 }
 
 .content {
   display: grid;
   gap: var(--space-6);
-  justify-items: center;
+  justify-items: start;
 }
 
 .footer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-3);
-  text-align: center;
+  text-align: start;
 }
 
 .footer p {
