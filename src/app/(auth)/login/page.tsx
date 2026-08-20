@@ -17,17 +17,21 @@ export default function LoginPage() {
   return (
     <div className={styles.page}>
       <AuthCard
+        className={styles.card}
         eyebrow="Welcome back"
-        title="Sign in"
-        description="Enter your account credentials to create a protected MUCYORA session."
+        title="Sign in securely"
+        description="Use your verified MUCYORA credentials to continue to your protected workspace."
         footer={
-          <LinkButton
-            href="/create-account"
-            variant="tertiary"
-            icon={<ArrowRight size={16} />}
-          >
-            Create an account
-          </LinkButton>
+          <div className={styles.footer}>
+            <span>New to MUCYORA?</span>
+            <LinkButton
+              href="/create-account"
+              variant="tertiary"
+              icon={<ArrowRight size={16} />}
+            >
+              Create an account
+            </LinkButton>
+          </div>
         }
       >
         <LoginForm />
