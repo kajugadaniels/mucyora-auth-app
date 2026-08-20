@@ -2,7 +2,7 @@
   width: 100%;
   display: grid;
   gap: var(--space-8);
-  justify-items: start;
+  justify-items: center;
 }
 .stage {
   width: min(100%, 560px);
@@ -20,9 +20,9 @@
 }
 .complete {
   display: grid;
-  justify-items: start;
+  justify-items: center;
   gap: var(--space-5);
-  text-align: start;
+  text-align: center;
 }
 .complete > div {
   display: grid;
