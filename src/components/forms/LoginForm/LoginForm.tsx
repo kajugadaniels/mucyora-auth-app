@@ -5,7 +5,6 @@ import {
   Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -102,10 +101,6 @@ export function LoginForm() {
         />
       </div>
       <div className={styles.options}>
-        <span className={styles.sessionSignal}>
-          <span className={styles.sessionIndicator} aria-hidden="true" />
-          Protected sign-in
-        </span>
         <Link className={styles.recoveryButton} href="/forgot-password">
           <HugeiconsIcon
             icon={Key01Icon}
@@ -133,10 +128,6 @@ export function LoginForm() {
       >
         Sign in
       </Button>
-      <p className={styles.securityLine}>
-        <ShieldCheck size={16} aria-hidden="true" />
-        Your session is protected by MUCYORA security controls.
-      </p>
     </form>
   );
 }
