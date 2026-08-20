@@ -2,31 +2,3 @@
   width: 100%;
   min-width: 0;
 }
-
-.card {
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: var(--color-primary);
-  pointer-events: none;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-2);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-body-small);
-}
-
-.footer :global(a) {
-  min-height: 36px;
-  padding-inline: var(--space-2);
-}
