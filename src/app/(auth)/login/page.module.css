@@ -1,29 +1,29 @@
 .page {
-  display: flex;
-  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100vw;
   min-height: 100dvh;
   margin: 0;
   padding: 0;
   background: var(--color-surface);
+  overflow: hidden;
 }
 
-/* ---------- Left side: form (50%, centered, white, no shadow/border) ---------- */
+/* Left side: a white, borderless form surface. */
 
 .formSide {
   display: flex;
-  flex: 0 0 50%;
-  width: 50%;
   min-width: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: var(--color-surface);
-  padding: var(--space-8) clamp(24px, 4vw, 64px);
+  padding: clamp(32px, 6vw, 80px) clamp(24px, 5vw, 80px);
 }
 
 .formWrapper {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin-inline: auto;
 }
 
@@ -95,7 +95,7 @@
   outline-offset: 3px;
 }
 
-/* ---------- Legal footer, below the form, centered ---------- */
+/* Legal links remain directly below the sign-in form. */
 
 .legalFooter {
   display: flex;
@@ -132,38 +132,66 @@
   background: var(--color-border-soft);
 }
 
-/* ---------- Right side: full-bleed image (50%, no padding/margin) ---------- */
+/* Right side: a full-bleed local brand image with no surrounding space. */
 
 .imageSide {
-  flex: 0 0 50%;
-  width: 50%;
-  height: 100dvh;
+  min-width: 0;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
-  background-image: url("https://adventure.com/wp-content/uploads/2019/01/Hero-Rwanda-25-years-on-Ruhondo-Lake.-c.-Virunga-Lodge-1920x1080.jpg");
+  background-image: url("/brand/auth-illustration.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-/* ---------- Responsive ---------- */
+/* The image never competes with the form on tablet or phone screens. */
 
 @media (max-width: 900px) {
+  .page {
+    display: block;
+    width: 100%;
+    overflow: visible;
+  }
+
   .imageSide {
     display: none;
   }
 
   .formSide {
-    flex: 1 1 100%;
     width: 100%;
     min-height: 100dvh;
-    padding: var(--space-7) var(--space-5);
+    padding: clamp(28px, 7vw, 56px) var(--page-padding-inline);
   }
 }
 
 @media (max-width: 480px) {
+  .formSide {
+    justify-content: flex-start;
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-8);
+  }
+
+  .formWrapper {
+    max-width: none;
+  }
+
   .legalFooter {
     flex-wrap: wrap;
     row-gap: var(--space-2);
+  }
+}
+
+@media (max-height: 700px) and (min-width: 901px) {
+  .formSide {
+    padding-block: var(--space-6);
+  }
+
+  .heading {
+    margin-bottom: var(--space-6);
+  }
+
+  .legalFooter {
+    margin-top: var(--space-7);
   }
 }
