@@ -1,7 +1,6 @@
 .form {
   display: grid;
   gap: var(--space-5);
-  padding-top: var(--space-1);
 }
 .fields {
   display: grid;
@@ -9,29 +8,9 @@
 }
 .options {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--space-4);
-}
-.sessionSignal {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-width: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-caption);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-.sessionIndicator {
-  width: 8px;
-  height: 8px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: var(--color-success);
-  box-shadow: 0 0 0 4px var(--color-success-soft);
 }
 .recoveryButton {
   min-height: 44px;
@@ -86,29 +65,9 @@
 .alternate {
   margin-top: var(--space-2);
 }
-.securityLine {
-  margin: var(--space-1) 0 0;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-muted);
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-caption);
-  line-height: 1.5;
-  text-align: start;
-}
-.securityLine svg {
-  margin-top: 1px;
-  flex: 0 0 auto;
-}
 @media (max-width: 520px) {
   .options {
     display: grid;
-    gap: var(--space-1);
   }
   .recoveryButton {
     justify-content: flex-start;
